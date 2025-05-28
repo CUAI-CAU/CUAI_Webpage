@@ -53,6 +53,9 @@ def verification(request):
 
 @csrf_exempt
 def submit(request):
+    if request.method != 'POST':
+        return HttpResponse('Method Not Allowed', status=405) # 405 Method Not Allowed
+
     # POST 요청의 body를 JSON으로 파싱합니다.
     data = json.loads(request.body)
     name = data['name']
