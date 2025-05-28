@@ -57,15 +57,12 @@ def submit(request):
     data = json.loads(request.body)
     name = data['name']
     email = data['email']
-    ans1 = data['ans1']
-    ans2 = data['ans2']
-    ans3 = data['ans3']
-    ans4 = data['ans4']
-    ans5 = data['ans5']
-    ans6 = data['ans6']
     
-    # 답변들을 리스트로 관리
-    ans = [ans1, ans2, ans3, ans4, ans5, ans6]
+    # 'ans'로 시작하는 모든 키를 찾아 답변으로 처리
+    ans = []
+    for key in data:
+        if key.startswith('ans'):
+            ans.append(data[key])
 
     # quiz_questions.json 불러오기 (정답 검증용)
     quiz_questions_path = settings.BASE_DIR / 'static' / 'quiz_questions.json'
@@ -74,12 +71,22 @@ def submit(request):
 
     # 맞춘 개수를 세거나 별도로 처리할 수 있음(선택)
     correct_answers = 0
-    for i in range(1, 7):
-        key = f"Q{i}"
-        user_answer = ans[i-1]
-        correct_answer = quiz_questions[key]['answer']
-        if user_answer == correct_answer:
-            correct_answers += 1
+    # ans 리스트의 길이를 기준으로 반복
+    for i in range(len(ans)):
+        # quiz_questions.json의 키 형식(Q1, Q2 등)에 맞게 생성
+        question_key = f"Q{i+1}" 
+        # 해당 키가 quiz_questions에 있는지 확인
+        if question_key in quiz_questions:
+            user_answer = ans[i]
+            correct_answer = quiz_questions[question_key]['answer']
+            if user_answer == correct_answer:
+                correct_answers += 1
+        else:
+            # quiz_questions.json에 해당 질문 번호가 없는 경우 오류 처리 또는 무시
+            # 예를 들어, 로그를 남기거나, 사용자에게 알릴 수 있습니다.
+            # 여기서는 일단 무시하고 계속 진행합니다.
+            pass
+
 
     # 저장할 레코드 생성 (타임스탬프 포함)
     record = {
@@ -137,42 +144,39 @@ def updatequestions(request):
     except json.JSONDecodeError:
         return HttpResponse('JSON Format Error', status=400)
     
-    # 예: data = {
-    #   "Q1": {"question":"...", "answer":"..."},
-    #   "Q2": {"question":"...", "answer":"..."},
-    #   ...
-    #   "passkey": "..."
-    # }
+    # passkey를 먼저 확인하고 제거
+    passkey = os.getenv("PASSKEY")
+    if passkey is None:
+        return HttpResponse('Failure', status=500) # 서버 설정 오류
+    if "passkey" not in data or data["passkey"] != passkey:
+        return HttpResponse('Failure', status=403) # 인증 실패
+    
+    # passkey를 data에서 제거하여 질문 데이터만 남김
+    questions_data = {k: v for k, v in data.items() if k != "passkey"}
 
-    # 6개 문항에 대한 점검 (Q1 ~ Q6)
-    for i in range(1, 7):
-        key = f"Q{i}"
-        if key not in data:
-            return HttpResponse('Failure', status=400)
-        # question, answer 키 검사
-        if not isinstance(data[key], dict) or 'question' not in data[key] or 'answer' not in data[key]:
-            return HttpResponse('Failure', status=400)
+    # 질문 데이터 유효성 검사
+    if not questions_data: # 질문 데이터가 없는 경우
+        return HttpResponse('No questions data provided', status=400)
+
+    for key, value in questions_data.items():
+        if not key.startswith("Q") or not key[1:].isdigit():
+            return HttpResponse(f'Invalid question key format: {key}', status=400)
+        
+        if not isinstance(value, dict) or 'question' not in value or 'answer' not in value:
+            return HttpResponse(f'Invalid question data for {key}', status=400)
 
         # question에 <br>을 붙이는 로직(필요시)
-        q_text = data[key]['question']
+        q_text = value['question']
         if not q_text.startswith("<br>"):
             q_text = "<br>" + q_text
         if not q_text.endswith("<br>"):
             q_text = q_text + "<br>"
-        data[key]['question'] = q_text
-
-    passkey = os.getenv("PASSKEY")
-    if passkey is None:
-        return HttpResponse('Failure', status=500)
-    elif "passkey" not in data or data["passkey"] != passkey:
-        return HttpResponse('Failure', status=403)
-
-    data.pop("passkey")
-
+        questions_data[key]['question'] = q_text
+    
     # JSON 파일 쓰기
     quiz_questions_path = settings.BASE_DIR / 'static' / 'quiz_questions.json'
     with open(quiz_questions_path, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
+        json.dump(questions_data, f, ensure_ascii=False, indent=4)
     
     return HttpResponse('Success', status=200)
 
