@@ -168,6 +168,27 @@ def updatequestions(request):
     return HttpResponse('Success', status=200)
 
 @csrf_exempt
+def get_questions(request):
+    if request.method != 'GET':
+        return HttpResponse('Method Not Allowed: Only GET requests are supported.', status=405)
+
+    quiz_questions_path = settings.BASE_DIR / 'static' / 'quiz_questions.json'
+    try:
+        with open(quiz_questions_path, 'r', encoding='utf-8') as f:
+            quiz_questions = json.load(f)
+        return HttpResponse(json.dumps(quiz_questions, ensure_ascii=False, indent=4),
+                            content_type='application/json',
+                            status=200)
+    except FileNotFoundError:
+        return HttpResponse('Quiz questions file not found.', status=404)
+    except json.JSONDecodeError:
+        return HttpResponse('Error decoding quiz questions JSON.', status=500)
+    except Exception as e:
+        print(f"[ERROR] Failed to get questions: {e}")
+        return HttpResponse('Failed to retrieve questions.', status=500)
+
+
+@csrf_exempt
 def viewlog(request):
     if request.method != 'GET':
         return HttpResponse('Failure', status=405)
