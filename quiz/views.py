@@ -53,91 +53,74 @@ def verification(request):
 
 @csrf_exempt
 def submit(request):
-    print("Received request:", request)
+    print("[DEBUG] Received request:", request)
     if request.method != 'POST':
-        return HttpResponse('Method Not Allowed', status=405) # 405 Method Not Allowed
+        print("[ERROR] Invalid request method. Expected POST, got:", request.method)
+        return HttpResponse('Method Not Allowed: Only POST requests are supported.', status=405) # 405 Method Not Allowed
 
-    # POST 요청의 body를 JSON으로 파싱합니다.
-    data = json.loads(request.body)
-    name = data['name']
-    email = data['email']
-    
+    try:
+        # POST 요청의 body를 JSON으로 파싱합니다.
+        data = json.loads(request.body)
+        print("[DEBUG] Parsed request body:", data)
+    except json.JSONDecodeError as e:
+        print("[ERROR] Failed to parse JSON body:", e)
+        return HttpResponse('Invalid JSON format.', status=400)
+
+    name = data.get('name')
+    email = data.get('email')
+    if not name or not email:
+        print("[ERROR] Missing required fields: 'name' or 'email'.")
+        return HttpResponse('Missing required fields: name and email.', status=400)
+
     # 'ans'로 시작하는 모든 키를 찾아 답변으로 처리
-    ans = []
-    for key in data:
-        if key.startswith('ans'):
-            ans.append(data[key])
-
-    # quiz_questions.json 불러오기 (정답 검증용)
-    quiz_questions_path = settings.BASE_DIR / 'static' / 'quiz_questions.json'
-    with open(quiz_questions_path, 'r', encoding='utf-8') as f:
-        quiz_questions = json.load(f)
-
-    # 맞춘 개수를 세거나 별도로 처리할 수 있음(선택)
-    correct_answers = 0
-    # ans 리스트의 길이를 기준으로 반복
-    for i in range(len(ans)):
-        # quiz_questions.json의 키 형식(Q1, Q2 등)에 맞게 생성
-        question_key = f"Q{i+1}" 
-        # 해당 키가 quiz_questions에 있는지 확인
-        if question_key in quiz_questions:
-            user_answer = ans[i]
-            correct_answer = quiz_questions[question_key]['answer']
-            if user_answer == correct_answer:
-                correct_answers += 1
-        else:
-            # quiz_questions.json에 해당 질문 번호가 없는 경우 오류 처리 또는 무시
-            # 예를 들어, 로그를 남기거나, 사용자에게 알릴 수 있습니다.
-            # 여기서는 일단 무시하고 계속 진행합니다.
-            pass
-
+    ans = [data[key] for key in data if key.startswith('ans')]
+    print("[DEBUG] Extracted answers:", ans)
 
     # 저장할 레코드 생성 (타임스탬프 포함)
     record = {
         "name": name,
         "email": email,
         "answers": ans,
-        "correct_count": correct_answers,
         "submitted_at": datetime.datetime.now().isoformat()
     }
-    
-    # 파일명은 현재 날짜를 YYMMDD 형식으로 사용
+
     file_name = datetime.datetime.now().strftime("%y%m%d") + ".json"
-    
-    # 저장 디렉토리 설정: quiz_log 폴더가 없으면 생성
     folder = "quiz_log"
     if not os.path.exists(folder):
         os.makedirs(folder)
     file_path = os.path.join(folder, file_name)
-    
-    # 기존 파일 로드
-    if os.path.exists(file_path):
-        with open(file_path, 'r', encoding='utf-8') as f:
-            try:
+
+    try:
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
                 file_data = json.load(f)
-            except json.JSONDecodeError:
-                file_data = []
-    else:
+        else:
+            file_data = []
+    except json.JSONDecodeError as e:
+        print("[ERROR] Failed to parse existing log file:", e)
         file_data = []
-    
-    # 새로운 레코드 추가
+
     file_data.append(record)
-    
-    # 업데이트된 데이터를 JSON 파일에 저장
-    with open(file_path, 'w', encoding='utf-8') as f:
-        json.dump(file_data, f, ensure_ascii=False, indent=4)
-    
-    # members_dict 내 정보와 답변 유효성 검사 후 응답 반환
+
+    try:
+        with open(file_path, 'w', encoding='utf-8') as f:
+            json.dump(file_data, f, ensure_ascii=False, indent=4)
+        print("[DEBUG] Log file updated successfully at:", file_path)
+    except Exception as e:
+        print("[ERROR] Failed to write log file:", e)
+        return HttpResponse('Failed to save log.', status=500)
+
     for member in members_dict:
         if member['name'] == name and member['email'] == email:
-            # 빈 답변이 있는지 확인
             if "" in ans or None in ans:
-                return HttpResponse('Failure', status=400)
+                print("[ERROR] Empty answers detected in submission.")
+                return HttpResponse('Failure: Empty answers are not allowed.', status=400)
             else:
-                # 최종 통과
+                print("[DEBUG] Submission validated successfully for:", name, email)
                 return HttpResponse('Success', status=200)
 
-    return HttpResponse('Failure', status=400)
+    print("[ERROR] User not found in members_dict or validation failed.")
+    return HttpResponse('Failure: User not found or validation failed.', status=400)
 
 @csrf_exempt
 def updatequestions(request):
