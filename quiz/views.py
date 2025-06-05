@@ -53,6 +53,7 @@ def verification(request):
 
 @csrf_exempt
 def submit(request):
+    print("Received request:", request)
     if request.method != 'POST':
         return HttpResponse('Method Not Allowed', status=405) # 405 Method Not Allowed
 
