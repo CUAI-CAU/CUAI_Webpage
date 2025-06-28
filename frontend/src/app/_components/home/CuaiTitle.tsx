@@ -3,6 +3,7 @@
 import { ScrollDownButton } from '@/components'
 import { CUAI_TITLE } from '@/constants/home'
 import { useEffect, useState } from 'react'
+import { BlobScene } from '../blob'
 
 export const CuaiTitle = () => {
     const [isFontLoaded, setIsFontLoaded] = useState(false)
@@ -27,7 +28,9 @@ export const CuaiTitle = () => {
                         </h1>
                     ))}
                 </div>
-                <div className="w-[350px] hidden md:flex" />
+                <div className="w-[350px] h-screen hidden md:flex">
+                    <BlobScene />
+                </div>
             </div>
 
             <div className="absolute bottom-10">
