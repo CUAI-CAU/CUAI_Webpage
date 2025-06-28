@@ -5,9 +5,9 @@ import Image from 'next/image'
 export const NipaGpu = () => {
     return (
         <FadeInOnScroll className="flex items-center justify-center min-h-screen">
-            <section className="flex flex-col justify-center items-center w-3/4 space-y-10">
+            <section className="flex flex-col justify-center items-center w-3/4 xl:w-2/3 2xl:w-1/2 space-y-10 text-center">
                 <div className="text-5xl font-semibold">{NIPAGPU.title}</div>
-                <div className="flex flex-col gap-5 items-center text-center">
+                <div className="flex flex-col gap-5 items-center">
                     <div>{NIPAGPU.description[0]}</div>
                     <div>{NIPAGPU.description[1]}</div>
                     <div className="w-2/3 grid grid-cols-1 md:grid-cols-2 justify-items-center place-items-center gap-5">

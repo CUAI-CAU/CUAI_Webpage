@@ -26,7 +26,7 @@ export const Curriculum = () => {
 
     return (
         <FadeInOnScroll className="flex items-center justify-center min-h-screen">
-            <section className="flex flex-col w-3/4 space-y-10">
+            <section className="flex flex-col w-3/4 xl:w-2/3 space-y-10">
                 <div className="flex text-center md:text-start text-5xl font-semibold">커리큘럼</div>
                 <div className="flex flex-col lg:flex-row gap-5">
                     {CURRICULUM.map((c, index) => (
