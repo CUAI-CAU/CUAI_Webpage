@@ -6,7 +6,7 @@ export const NavBarDesktop = () => {
     return (
         <div className="hidden md:flex items-center justify-between w-full h-20 px-20 py-12 bg-[#0e1a2f40] backdrop-blur-sm">
             <Link href="/">
-                <Image src="/images/cuai.png" alt="CUAI Logo" width={96} height={32} />
+                <Image priority src="/images/cuai.png" alt="CUAI Logo" width={96} height={32} />
             </Link>
             <nav className="flex flex-row gap-7">
                 {NAVIGATION_ITEM.map(({ label, path }, index) => (

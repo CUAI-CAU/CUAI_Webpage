@@ -40,7 +40,7 @@ export const Footer = () => {
                     <ChevronsUp /> Scroll to top
                 </button>
                 <div className="relative w-32 h-[44px] md:w-56 md:h-[77px]">
-                    <Image src="/images/cuai.png" alt="CUAI Logo" fill />
+                    <Image src="/images/cuai.png" alt="CUAI Logo" fill sizes="(min-width: 768px) 14rem, 8rem" />
                 </div>
             </div>
         </footer>

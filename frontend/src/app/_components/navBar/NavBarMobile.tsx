@@ -42,7 +42,7 @@ export const NavBarMobile = () => {
         <div className="flex p-7 h-16 w-full bg-[#19264b40] backdrop-blur-sm md:hidden">
             <div className="relative w-full z-50 flex justify-between items-center">
                 <Link href="/">
-                    <Image src="/images/cuai.png" alt="CUAI Logo" width={64} height={22} />
+                    <Image priority src="/images/cuai.png" alt="CUAI Logo" width={64} height={22} />
                 </Link>
                 <HamburgerIcon isOpen={isOpen} onClick={() => setIsOpen((prev) => !prev)} />
             </div>
