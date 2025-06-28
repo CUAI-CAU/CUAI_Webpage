@@ -1,8 +1,8 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { ScrollDownButton } from '@/components'
 import { CUAI_TITLE } from '@/constants/home'
-import { useEffect, useState } from 'react'
 import { BlobScene } from '../blob'
 
 export const CuaiTitle = () => {
