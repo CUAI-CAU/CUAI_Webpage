@@ -36,7 +36,7 @@ export const Curriculum = () => {
                             onMouseLeave={() => setSelectedIndex(-1)}
                             className={getCardClassName(index)}
                         >
-                            <div className="flex flex-row justify-between items-center text-2xl font-light">
+                            <div className="flex flex-row justify-between items-center text-2xl font-medium">
                                 <div>{c.title}</div>
                                 <MoveUpRight />
                             </div>

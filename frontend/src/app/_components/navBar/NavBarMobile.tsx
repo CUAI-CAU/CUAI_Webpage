@@ -52,7 +52,7 @@ export const NavBarMobile = () => {
             >
                 <div className="absolute inset w-full h-full bg-[#19264b] opacity-95" />
                 {NAVIGATION_ITEM.map(({ label, path }, index) => (
-                    <Link key={index} href={path} onClick={close} className="z-10 text-3xl font-light">
+                    <Link key={index} href={path} onClick={close} className="z-10 text-3xl font-medium">
                         {label}
                     </Link>
                 ))}

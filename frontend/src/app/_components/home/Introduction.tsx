@@ -12,7 +12,7 @@ const WhoAreWeCard = ({ label, info, description }: WhoAreWeCardProps) => {
         <div className="flex flex-row gap-5 text-start">
             <div className="flex flex-col w-1/4 md:w-1/3 whitespace-nowraps">
                 <div className="text-sm md:text-md text-slate-500">{label}</div>
-                <div className="text-2xl md:text-3xl font-light text-slate-300">{info}</div>
+                <div className="text-2xl md:text-3xl font-medium text-slate-300">{info}</div>
             </div>
             <div className="flex w-3/4 md:w-2/3">{description}</div>
         </div>

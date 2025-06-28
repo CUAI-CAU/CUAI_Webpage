@@ -6,7 +6,7 @@ import { Footer, NavBar } from './_components'
 const pretendard = localFont({
     src: [
         { path: '../styles/fonts/pretendard-100-thin.woff2', weight: '100', style: 'normal' },
-        { path: '../styles/fonts/pretendard-300-light.woff2', weight: '300', style: 'normal' },
+        { path: '../styles/fonts/pretendard-400-medium.woff2', weight: '400', style: 'normal' },
         { path: '../styles/fonts/pretendard-600-semibold.woff2', weight: '600', style: 'normal' },
     ],
     variable: '--pretendard',
