@@ -1,38 +1,22 @@
 /// <reference types="cypress" />
 /// <reference types="@testing-library/cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+
+export {}
+
+Cypress.Commands.add('verifyMember', () => {
+    cy.fixture('member').then(({ name, email }) => {
+        // step 1: 학회원 인증 입력
+        cy.get('input[placeholder="이름을 입력해주세요."]').type(name)
+        cy.get('input[placeholder="이메일을 입력해주세요."]').type(email)
+        // step 2: 인증 버튼 클릭
+        cy.contains('확인하기').click()
+    })
+})
+
+declare global {
+    namespace Cypress {
+        interface Chainable {
+            verifyMember(): Chainable<void>
+        }
+    }
+}
