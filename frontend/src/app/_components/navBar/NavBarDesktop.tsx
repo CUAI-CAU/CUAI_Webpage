@@ -1,12 +1,11 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { NAVIGATION_ITEM } from './NavBar'
 
 export const NavBarDesktop = () => {
     return (
         <div className="hidden md:flex items-center justify-between w-full h-20 px-20 py-12 bg-[#0e1a2f40] backdrop-blur-sm">
             <Link href="/">
-                <Image priority src="/images/cuai.png" alt="CUAI Logo" width={96} height={32} />
+                <img src="/images/cuai.png" alt="CUAI Logo" className="w-24" />
             </Link>
             <nav className="flex flex-row gap-7">
                 {NAVIGATION_ITEM.map(({ label, path }, index) => (

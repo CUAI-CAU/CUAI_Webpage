@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { NAVIGATION_ITEM } from './NavBar'
 
 interface HamburgerIconProps {
@@ -42,7 +41,7 @@ export const NavBarMobile = () => {
         <div className="flex p-7 h-16 w-full bg-[#19264b40] backdrop-blur-sm md:hidden">
             <div className="relative w-full z-50 flex justify-between items-center">
                 <Link href="/">
-                    <Image priority src="/images/cuai.png" alt="CUAI Logo" width={64} height={22} />
+                    <img src="/images/cuai.png" alt="CUAI Logo" className="w-16" />
                 </Link>
                 <HamburgerIcon isOpen={isOpen} onClick={() => setIsOpen((prev) => !prev)} />
             </div>
