@@ -1,2 +1,4 @@
 export * from './ScrollDownButton'
 export * from './FadeInOnScroll'
+export * from './FadeInOnMount'
+export * from './TitledSection'
