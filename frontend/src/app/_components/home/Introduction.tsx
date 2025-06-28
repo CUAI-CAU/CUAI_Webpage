@@ -29,8 +29,8 @@ export const Introduction = () => {
                     {/* left section */}
                     <div className="flex flex-col justify-between p-3 text-center md:text-start whitespace-pre-line">
                         <div className="text-3xl md:text-4xl">
-                            "CUAI는 중앙대학교{'\n'}
-                            <span className="text-emerald-500"> 유일의 인공지능 학회</span>입니다."
+                            &ldquo;CUAI는 중앙대학교{'\n'}
+                            <span className="text-emerald-500"> 유일의 인공지능 학회</span>입니다.&ldquo;
                         </div>
 
                         <div className="mt-10 text-lg md:text-xl text-slate-400">
