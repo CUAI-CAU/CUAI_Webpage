@@ -1,4 +1,4 @@
-import { Euler, Mesh, PerspectiveCamera } from 'three'
+import { Euler, Mesh } from 'three'
 import { Physics } from '@react-three/rapier'
 import { Suspense, useRef } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
