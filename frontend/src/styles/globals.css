@@ -16,9 +16,3 @@ body {
     color: var(--foreground);
     font-family: pretendard, Arial, Helvetica, sans-serif;
 }
-
-@layer {
-    body {
-        @apply overflow-x-hidden overflow-y-scroll;
-    }
-}
