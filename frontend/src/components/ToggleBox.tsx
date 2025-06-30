@@ -18,7 +18,7 @@ export const ToggleBox = ({ title, isOpen, setIsOpen, children }: PropsWithChild
                 <div className="text-lg text-slate-50 ">{title}</div>
                 <div
                     className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                        isOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'
+                        isOpen ? 'max-h-screen opacity-100 mt-4' : 'max-h-0 opacity-0 mt-0'
                     }`}
                 >
                     <div
