@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
         return [
             {
                 source: '/server/:path*',
-                destination: 'https://cuai.kr/:path*',
+                destination: `${process.env.NEXT_PUBLIC_BASE_URL}/:path*`,
             },
         ]
     },
