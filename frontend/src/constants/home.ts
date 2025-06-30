@@ -38,7 +38,7 @@ export const CURRICULUM = [
 ]
 
 export const NIPAGPU = {
-    title: 'NIPA 고성능 GPU 서버',
+    title: 'NIPA GPU 서버',
     description: [
         '정보통신산업진흥원(NIPA)에서 제공하는 고성능 컴퓨팅 서버 할당을 받아, 학회원이라면 언제든 고성능 GPU를 활용하여 더 나은 데이터 분석 환경을 이용할 수 있습니다.',
         'NVIDIA Tesla V100 2개가 설치된 한 개의 서버를 지원받았으며 이를 활용하여 딥러닝 학습, 연구, 프로젝트 등을 수행할 수 있습니다. 해당서버에는 학습을 위한 프레임워크가 사전에 모두 설치되어 별도의 설치 작업없이 편리하게 작업을 진행할 수 있습니다.',

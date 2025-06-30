@@ -16,7 +16,7 @@ const colorMap: Record<string, string> = {
 
 const TagItem = ({ text, color = 'default' }: { text: string | undefined; color?: string }) => {
     const bgClass = colorMap[color]
-    return <p className={`w-fit px-1 rounded-md font-medium ${bgClass}`}>{text}</p>
+    return <p className={`w-fit px-1 rounded-md font-medium whitespace-nowrap ${bgClass}`}>{text}</p>
 }
 
 const SelectProperties = ({ label, content }: { label: string; content: Tag }) => (
@@ -26,20 +26,20 @@ const SelectProperties = ({ label, content }: { label: string; content: Tag }) =
     </div>
 )
 
-interface PropertiesRendererProps {
-    projectId: string | null
-}
-
 const MultiSelectProperties = ({ label, contents }: { label: string; contents: Tag[] }) => (
     <div className="grid grid-cols-4">
         <p className="text-slate-400">{label}</p>
-        <div className="col-span-3 flex flex-row gap-3">
+        <div className="col-span-3 flex flex-row flex-wrap gap-3">
             {contents.map((content) => (
                 <TagItem key={content.id} text={content.name} color={content.color} />
             ))}
         </div>
     </div>
 )
+
+interface PropertiesRendererProps {
+    projectId: string | null
+}
 
 export const PropertiesRenderer = ({ projectId }: PropertiesRendererProps) => {
     const { data: properties } = useGetProjectProperties(projectId)
