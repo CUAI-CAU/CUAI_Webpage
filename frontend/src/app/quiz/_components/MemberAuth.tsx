@@ -41,7 +41,7 @@ export const MemberAuth = ({ setIsVerified, setUserInfo }: MemberAuthProps) => {
 
     return (
         <div className="w-full md:w-2/3 lg:w-1/2 flex flex-col p-10 border border-none rounded-2xl bg-slate-800">
-            <h3 className="mb-7 text-center text-2xl font-normal">Membership Verification</h3>
+            <h3 className="mb-7 text-center text-2xl font-medium">Membership Verification</h3>
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-1">
                 <label className="text-start">name: </label>
