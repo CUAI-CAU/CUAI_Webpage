@@ -14,7 +14,7 @@ export const ProjectRenderer = ({ projectId }: ProjectRendererProps) => {
     return (
         <>
             {properties ? (
-                <div className="space-y-5">
+                <div className="space-y-7">
                     <h1 className="text-xl md:text-3xl font-bold">{properties['이름'].title[0].plain_text}</h1>
                     <div className="text-sm px-3 space-y-3">
                         <SelectProperties label="컨퍼런스" content={properties['컨퍼런스'].select} />
