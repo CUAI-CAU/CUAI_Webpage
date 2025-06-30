@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import '../styles/globals.css'
 import { Footer, NavBar } from './_components'
+import Providers from './providers'
 
 const pretendard = localFont({
     src: [
@@ -27,7 +28,9 @@ export default function RootLayout({
         <html lang="kr">
             <body className={`${pretendard.variable} min-w-xs overflow-x-hidden overflow-y-scroll`}>
                 <NavBar />
-                <main>{children}</main>
+                <Providers>
+                    <main>{children}</main>
+                </Providers>
                 <Footer />
             </body>
         </html>

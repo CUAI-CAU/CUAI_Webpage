@@ -1,29 +1,19 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { BlockView } from '@/types/notion/blocks'
-import { useEffect, useState } from 'react'
+
+async function fetchProjectBlocks(projectId: string): Promise<BlockView[]> {
+    const res = await fetch(`/api/projects/${projectId}/blocks`)
+    if (!res.ok) throw new Error('Failed to fetch project blocks')
+    return res.json()
+}
 
 export function useGetProjectBlocks(projectId: string | null) {
-    const [data, setData] = useState<BlockView[] | null>(null)
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-
-    useEffect(() => {
-        if (!projectId) return
-
-        const fetchData = async () => {
-            try {
-                setIsLoading(true)
-                const res = await fetch(`/api/projects/${projectId}/blocks`)
-                if (!res.ok) throw new Error('Failed to fetch projects')
-                setData(await res.json())
-            } catch (err) {
-                console.error(err)
-            } finally {
-                setIsLoading(false)
-            }
-        }
-        fetchData()
-    }, [projectId])
-
-    return { data, isLoading }
+    return useQuery({
+        queryKey: ['projects', 'blocks', projectId],
+        queryFn: () => fetchProjectBlocks(projectId!),
+        staleTime: 1000 * 60 * 10,
+        enabled: !!projectId,
+    })
 }
