@@ -3,7 +3,7 @@ import { ToggleBox } from '@/components'
 import { ProjectProperty } from '@/types/notion/properties'
 
 interface ProjectSelctorProps {
-    projects: ProjectProperty[] | null
+    projects: ProjectProperty[]
     selectedId: string | null
     handleChange: (key: string) => void
 }
@@ -12,8 +12,6 @@ export const ProjectSelector = ({ projects, selectedId, handleChange }: ProjectS
     const [isOpen, setIsOpen] = useState(false)
 
     useEffect(() => setIsOpen(false), [selectedId])
-
-    if (!projects) return <div className="h-24 bg-slate-800 rounded-2xl " />
 
     return (
         <ToggleBox

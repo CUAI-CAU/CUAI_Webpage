@@ -3,17 +3,17 @@
 import { useEffect, useState } from 'react'
 import { FadeInOnMount, TitledSection } from '@/components'
 import { useGetProjects } from '@/hooks/useGetProjects'
-import { BlocksRenderer, ProjectSelector, PropertiesRenderer } from './_components'
+import { ProjectRenderer, ProjectSelector, ProjectSelectorSkeleton } from './_components'
 
 export default function ProjectsPage() {
     const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null)
 
-    const { data: projects } = useGetProjects()
+    const { data: projects, isLoading } = useGetProjects()
 
     const handleSelectedProjectIdChange = (id: string) => setSelectedProjectId(id)
 
     useEffect(() => {
-        if (projects) setSelectedProjectId(projects[0].id) // 첫 번째 프로젝트로 설정
+        if (projects) setSelectedProjectId(projects[0].id)
     }, [projects])
 
     return (
@@ -23,17 +23,24 @@ export default function ProjectsPage() {
                     학회원들이 진행한 주요 프로젝트들을 소개합니다. 어떤 문제를 해결하고, 어떤 기술을 시도했는지
                     확인해보세요.
                 </div>
+
                 <div className="w-full border-b border-slate-700" />
 
-                <div className="flex flex-col w-full gap-7">
-                    <ProjectSelector
-                        projects={projects}
-                        selectedId={selectedProjectId}
-                        handleChange={handleSelectedProjectIdChange}
-                    />
-                    <div className="flex flex-col w-full p-7 rounded-3xl space-y-3 bg-slate-800 text-slate-200">
-                        <PropertiesRenderer projectId={selectedProjectId} />
-                        <BlocksRenderer projectId={selectedProjectId} />
+                <div className="w-full space-y-7">
+                    {/* project selector */}
+                    {isLoading ? (
+                        <ProjectSelectorSkeleton />
+                    ) : (
+                        <ProjectSelector
+                            projects={projects!}
+                            selectedId={selectedProjectId}
+                            handleChange={handleSelectedProjectIdChange}
+                        />
+                    )}
+
+                    {/* notion page renderer */}
+                    <div className="p-7 rounded-3xl bg-slate-800 text-slate-200">
+                        <ProjectRenderer projectId={selectedProjectId} />
                     </div>
                 </div>
             </TitledSection>

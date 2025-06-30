@@ -1,31 +1,7 @@
-import { useGetProjectBlocks } from '@/hooks/useGetProjectBlocks'
-import { BlockView, CalloutBlockView, ImageBlockView, VideoBlockView, ParagraphBlockView } from '@/types/notion/blocks'
+import { BlockView, CalloutBlockView, ImageBlockView, ParagraphBlockView, VideoBlockView } from '@/types/notion/blocks'
 import Image from 'next/image'
 
-interface BlockRendererProps {
-    projectId: string | null
-}
-
-export const BlocksRenderer = ({ projectId }: BlockRendererProps) => {
-    const { data: blocks } = useGetProjectBlocks(projectId)
-
-    if (!blocks) {
-        return <div className="mt-20 w-full h-screen bg-slate-500 rounded-xl animate-pulse" />
-    }
-
-    return (
-        <div className="mt-10 space-y-5">
-            {blocks &&
-                blocks.map((block) => (
-                    <div key={block.id}>
-                        <NotionBlock block={block} />
-                    </div>
-                ))}
-        </div>
-    )
-}
-
-const NotionBlock = ({ block }: { block: BlockView }) => {
+export const BlockRenderer = ({ block }: { block: BlockView }) => {
     switch (block.type) {
         case 'paragraph':
             return <ParagraphBlock block={block} />
@@ -52,18 +28,6 @@ const ParagraphBlock = ({ block }: { block: ParagraphBlockView }) => {
     )
 }
 
-const ImageBlock = ({ block }: { block: ImageBlockView }) => {
-    return <Image src={block.image.file.url} alt="Notion Image" width={1000} height={0} />
-}
-
-const VideoBlock = ({ block }: { block: VideoBlockView }) => {
-    return (
-        <video controls width="1000">
-            <source src={block.video.file.url} type="video/webm" />
-        </video>
-    )
-}
-
 const CalloutBlock = ({ block }: { block: CalloutBlockView }) => {
     const { icon, rich_text } = block.callout
 
@@ -76,5 +40,17 @@ const CalloutBlock = ({ block }: { block: CalloutBlockView }) => {
                 ))}
             </div>
         </div>
+    )
+}
+
+const ImageBlock = ({ block }: { block: ImageBlockView }) => {
+    return <Image src={block.image.file.url} alt="Notion Image" width={1000} height={0} />
+}
+
+const VideoBlock = ({ block }: { block: VideoBlockView }) => {
+    return (
+        <video controls width="1000">
+            <source src={block.video.file.url} type="video/webm" />
+        </video>
     )
 }

@@ -1,3 +1,3 @@
 export * from './ProjectSelector'
-export * from './PropertiesRenderer'
-export * from './BlocksRenderer'
+export * from './ProjectRenderer'
+export * from './Skeleton'
