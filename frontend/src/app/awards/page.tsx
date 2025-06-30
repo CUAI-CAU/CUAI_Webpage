@@ -32,7 +32,7 @@ export default function AwardsPage() {
                             isOpen={openStates[index]}
                             setIsOpen={() => toggleIndex(index)}
                         >
-                            <ul className="px-5 list-disc list-inside space-y-2">
+                            <ul className="p-0 md:px-5 list-disc list-inside space-y-2">
                                 {section.awards.map((award, i) => (
                                     <li key={i}>{award}</li>
                                 ))}
