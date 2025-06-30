@@ -62,7 +62,7 @@ export const PropertiesRenderer = ({ projectId }: PropertiesRendererProps) => {
         <div className="space-y-7">
             {properties && (
                 <>
-                    <h1 className="mb-7 text-3xl font-bold">{properties['이름'].title[0].plain_text}</h1>
+                    <h1 className="mb-7 text-xl md:text-3xl font-bold">{properties['이름'].title[0].plain_text}</h1>
                     <div className="px-3 space-y-3 text-sm">
                         <SelectProperties label="컨퍼런스" content={properties['컨퍼런스'].select} />
                         <MultiSelectProperties label="참여자" contents={properties['참여자'].multi_select} />
