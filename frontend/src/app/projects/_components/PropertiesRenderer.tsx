@@ -49,8 +49,8 @@ export const PropertiesRenderer = ({ projectId }: PropertiesRendererProps) => {
             <div className="space-y-7">
                 <div className="w-full h-28 bg-slate-500 rounded-xl animate-pulse" />
                 <div className="space-y-3">
-                    <div className="w-sm h-5.5 px-1 bg-slate-500 rounded-md animate-pulse" />
-                    <div className="w-lg h-5.5 px-1 bg-slate-500 rounded-md animate-pulse" />
+                    <div className="w-full md:w-sm h-5.5 px-1 bg-slate-500 rounded-md animate-pulse" />
+                    <div className="w-full md:w-lg h-5.5 px-1 bg-slate-500 rounded-md animate-pulse" />
                 </div>
 
                 <hr className="border-slate-400" />

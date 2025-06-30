@@ -10,7 +10,7 @@ export const BlocksRenderer = ({ projectId }: BlockRendererProps) => {
     const { data: blocks } = useGetProjectBlocks(projectId)
 
     if (!blocks) {
-        return <div className="mt-20 w-full h-screen bg-slate-500 rounded-md animate-pulse" />
+        return <div className="mt-20 w-full h-screen bg-slate-500 rounded-xl animate-pulse" />
     }
 
     return (
