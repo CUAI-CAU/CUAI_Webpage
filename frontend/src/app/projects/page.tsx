@@ -20,8 +20,8 @@ export default function ProjectsPage() {
         <FadeInOnMount className="flex justify-center items-center">
             <TitledSection title="프로젝트" className="w-6/7 md:w-3/4 xl:w-2/3 2xl:w-1/2">
                 <div className="text-md md:text-xl text-slate-300 text-center max-w-sm">
-                    학회원들이 진행한 주요 프로젝트들을 소개합니다. 어떤 문제를 해결하고, 어떤 기술을 시도했는지
-                    확인해보세요.
+                    주요 프로젝트들을 소개합니다. 하단의 토글을 눌러 학회원들이 어떤 문제를 해결하고, 어떤 기술을
+                    시도했는지 확인해보세요.
                 </div>
 
                 <div className="w-full border-b border-slate-700" />

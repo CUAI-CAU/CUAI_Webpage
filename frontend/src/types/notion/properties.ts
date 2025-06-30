@@ -10,7 +10,7 @@ export type DatabaseParent = {
     database_id: string
 }
 
-export type Title = {
+export type RichText = {
     type: string
     text: {
         content: string
@@ -29,7 +29,11 @@ export type Title = {
 }
 
 export type TitleProperty = CommonProperty & {
-    title: Title[]
+    title: RichText[]
+}
+
+export type RichTextProperty = CommonProperty & {
+    rich_text: RichText[]
 }
 
 export type SelectProperty = CommonProperty & {
@@ -40,15 +44,27 @@ export type MultiSelectProperty = CommonProperty & {
     multi_select: Tag[]
 }
 
-export type Properties = {
+export type ProjectProperties = {
     ['컨퍼런스']: SelectProperty
     ['참여자']: MultiSelectProperty
     ['이름']: TitleProperty
-    url: string
-    public_url: null
 }
 
-export type ProjectProperty = {
+export type AwardProperties = {
+    ['선택']: SelectProperty
+    ['이름']: TitleProperty
+}
+
+export type MemberProperties = {
+    ['전화번호']: CommonProperty & { phone_number: string }
+    ['관심 분야']: MultiSelectProperty
+    ['이메일']: CommonProperty & { email: string }
+    ['학번']: RichTextProperty
+    ['전공']: SelectProperty
+    ['이름']: TitleProperty
+}
+
+export type CommonNotionPage<T> = {
     object: 'page'
     id: string
     created_time: string
@@ -60,5 +76,11 @@ export type ProjectProperty = {
     parent: DatabaseParent
     archived: boolean
     in_trash: boolean
-    properties: Properties
+    properties: T
+    url: string
+    public_url: string | null
 }
+
+export type ProjectsNotionPage = CommonNotionPage<ProjectProperties>
+export type AwardsNotionPage = CommonNotionPage<AwardProperties>
+export type MembersNotionPage = CommonNotionPage<MemberProperties>

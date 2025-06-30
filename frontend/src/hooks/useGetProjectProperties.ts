@@ -1,9 +1,9 @@
 'use client'
 
+import { ProjectProperties } from '@/types/notion/properties'
 import { useQuery } from '@tanstack/react-query'
-import { Properties } from '@/types/notion/properties'
 
-async function fetchProjectProperties(projectId: string): Promise<Properties> {
+async function fetchProjectProperties(projectId: string): Promise<ProjectProperties> {
     const res = await fetch(`/api/projects/${projectId}/properties`)
     if (!res.ok) throw new Error('Failed to fetch project properties')
     return res.json()

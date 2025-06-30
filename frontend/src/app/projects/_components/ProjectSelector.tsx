@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { ToggleBox } from '@/components'
-import { ProjectProperty } from '@/types/notion/properties'
+import { ProjectsNotionPage } from '@/types/notion/properties'
 
 interface ProjectSelctorProps {
-    projects: ProjectProperty[]
+    projects: ProjectsNotionPage[]
     selectedId: string | null
     handleChange: (key: string) => void
 }
