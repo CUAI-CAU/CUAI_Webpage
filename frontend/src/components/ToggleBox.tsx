@@ -31,6 +31,7 @@ export const ToggleBox = ({ title, isOpen, setIsOpen, children }: PropsWithChild
                 </div>
             </div>
             <button
+                type="button"
                 aria-label="토글 열기"
                 className="absolute top-4 right-4 text-xl text-slate-300 cursor-pointer transition-all duration-300 hover:text-white"
             >

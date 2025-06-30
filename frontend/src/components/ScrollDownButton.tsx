@@ -8,6 +8,7 @@ export const ScrollDownButton = () => {
 
     return (
         <button
+            type="button"
             onClick={handleScrollDown}
             className="flex flex-col items-center text-slate-400 cursor-pointer animate-bounce"
         >

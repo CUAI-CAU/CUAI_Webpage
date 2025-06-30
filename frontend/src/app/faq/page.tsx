@@ -35,6 +35,7 @@ export default function FaqPage() {
                 <div className="flex flex-col items-center space-y-10">
                     <div className="text-2xl text-slate-300 whitespace-nowrap">CUAI에게 더 궁금한 점이 있다면?</div>
                     <button
+                        type="button"
                         onClick={() => window.open('https://pf.kakao.com/_qxkxhxiK')}
                         className="px-5 py-3 bg-emerald-500 text-slate-800 font-semibold rounded-full
                         hover:translate-y-1 whitespace-nowrap

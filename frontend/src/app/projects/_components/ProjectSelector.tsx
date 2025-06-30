@@ -18,6 +18,7 @@ export const ProjectSelector = ({ projects, selectedId, handleChange }: ProjectS
             <div className="space-y-3">
                 {projects.map((project) => (
                     <button
+                        type="button"
                         key={project.id}
                         onClick={() => handleChange(project.id)}
                         className="cursor-pointer transition-all duration-500 hover:translate-x-1 hover:text-slate-100"

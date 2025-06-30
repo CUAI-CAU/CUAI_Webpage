@@ -60,6 +60,7 @@ export const MemberAuth = ({ setIsVerified, setUserInfo }: MemberAuthProps) => {
                 />
 
                 <button
+                    type="submit"
                     className="mt-5 px-3 py-1 rounded-full bg-slate-600 hover:bg-slate-700
                     transition duration-300 ease-in-out cursor-pointer whitespace-nowrap"
                 >

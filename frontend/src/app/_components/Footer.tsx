@@ -18,7 +18,7 @@ export const Footer = () => {
             <div className="flex flex-col justify-between items-center md:items-start h-full gap-10">
                 <div className="flex flex-row gap-7 text-center">
                     {FOOTER_URL.map(({ label, url }, index) => (
-                        <button key={index} onClick={() => window.open(url)} className="cursor-pointer">
+                        <button type="button" key={index} onClick={() => window.open(url)} className="cursor-pointer">
                             {label}
                         </button>
                     ))}
@@ -33,6 +33,7 @@ export const Footer = () => {
             {/* right section */}
             <div className="flex flex-col justify-between items-center h-full gap-10 md:items-end">
                 <button
+                    type="button"
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                     className="flex flex-row items-center gap-2 whitespace-nowrap cursor-pointer"
                 >
