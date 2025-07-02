@@ -44,28 +44,30 @@ export const MemberAuth = ({ setIsVerified, setUserInfo }: MemberAuthProps) => {
             <h3 className="mb-7 text-center text-2xl font-medium">Membership Verification</h3>
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col space-y-1">
-                <label className="text-start">name: </label>
+                <label className="text-start text-md">Name: </label>
                 <input
                     {...register('name')}
                     type="name"
                     placeholder="이름을 입력해주세요."
-                    className="w-full text-sm px-3 py-1 border border-slate-500 rounded-full"
+                    className="w-full text-sm px-3 py-2 border border-slate-500 bg-slate-700 rounded-full"
                 />
-                <label className="text-start">email: </label>
+                <label className="text-start text-md">Email: </label>
                 <input
                     {...register('email')}
                     type="email"
                     placeholder="이메일을 입력해주세요."
-                    className="w-full text-sm px-3 py-1 border border-slate-500 rounded-full"
+                    className="w-full text-sm px-3 py-2 border border-slate-500 bg-slate-700 rounded-full"
                 />
 
-                <button
-                    type="submit"
-                    className="mt-5 px-3 py-1 rounded-full bg-slate-600 hover:bg-slate-700
-                    transition duration-300 ease-in-out cursor-pointer whitespace-nowrap"
-                >
-                    확인하기
-                </button>
+                <div className="flex justify-center items-center">
+                    <button
+                        type="submit"
+                        className="mt-5 px-7 py-2 rounded-full bg-emerald-500 hover:bg-slate-800 text-slate-800 hover:text-emerald-500 font-semibold
+                    transition duration-500 ease-in-out cursor-pointer whitespace-nowrap"
+                    >
+                        확인하기
+                    </button>
+                </div>
             </form>
         </div>
     )
