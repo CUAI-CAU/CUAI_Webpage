@@ -13,8 +13,8 @@ export const ProjectTypeSelector = ({
 }: ProjectTypeSelectorProps) => {
     return (
         <div className="min-w-52 p-6 bg-slate-800 rounded-2xl space-y-5">
-            <div className="text-lg">컨퍼런스 목록</div>
-            <div className="w-full border-b border-slate-400" />
+            <div className="text-center text-lg">컨퍼런스 목록</div>
+            <div className="w-full my-7 border-b border-slate-400" />
             {isLoading ? (
                 <div className="h-96 w-full rounded-xl bg-slate-500 animate-pulse" />
             ) : (
@@ -23,7 +23,7 @@ export const ProjectTypeSelector = ({
                         <li
                             key={name}
                             onClick={() => setSelectedType(name)}
-                            className={`cursor-pointer whitespace-nowrap transition-transform duration-300 lg:hover:translate-x-1 ${
+                            className={`text-center cursor-pointer whitespace-nowrap transition-transform duration-300 lg:hover:translate-x-1 ${
                                 selectedType === name ? 'font-semibold text-slate-200' : 'text-slate-400'
                             }`}
                         >
