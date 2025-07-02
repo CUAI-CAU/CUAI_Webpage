@@ -1,7 +1,6 @@
 'use client'
 
 import { FadeInOnMount, TitledSection, ToggleBox } from '@/components'
-import { AWARDS } from '@/constants/awards'
 import { useMemo, useState } from 'react'
 import { useGetAwards } from '@/hooks/useGetAwards'
 
@@ -21,8 +20,8 @@ export default function AwardsPage() {
         }, {})
     }, [awards])
 
-    const yearLabels = Object.keys(grouped).sort((a, b) => b.localeCompare(a)) // 최신순 정렬
-    const [openStates, setOpenStates] = useState<boolean[]>(AWARDS.map((_, i) => i === 0))
+    const yearLabels = Object.keys(grouped).sort((a, b) => b.localeCompare(a))
+    const [openStates, setOpenStates] = useState<boolean[]>(yearLabels.map((_, i) => i === 0))
 
     const toggleIndex = (index: number) => {
         setOpenStates((prev) => prev.map((value, i) => (i === index ? !value : value)))
