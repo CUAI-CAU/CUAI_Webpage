@@ -44,7 +44,11 @@ const CalloutBlock = ({ block }: { block: CalloutBlockView }) => {
 }
 
 const ImageBlock = ({ block }: { block: ImageBlockView }) => {
-    return <Image src={block.image.file.url} alt="Notion Image" width={1000} height={800} />
+    return (
+        <div className="w-full flex justify-center items-center">
+            <Image src={block.image.file.url} alt="Notion Image" width={1000} height={800} />
+        </div>
+    )
 }
 
 const VideoBlock = ({ block }: { block: VideoBlockView }) => {
