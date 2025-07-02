@@ -15,7 +15,7 @@ export const ProjectSelector = ({ projects, selectedId, handleChange }: ProjectS
 
     return (
         <ToggleBox title="프로젝트 목록" isOpen={isOpen} setIsOpen={setIsOpen}>
-            <div className="space-y-3">
+            <div className="flex flex-col space-y-3">
                 {projects.map((project) => (
                     <button
                         type="button"
