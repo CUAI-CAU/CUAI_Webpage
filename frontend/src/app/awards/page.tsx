@@ -1,31 +1,54 @@
 'use client'
 
 import { FadeInOnMount, TitledSection, ToggleBox } from '@/components'
-import { useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useGetAwards } from '@/hooks/useGetAwards'
 
 export default function AwardsPage() {
     const { data: awards, isLoading } = useGetAwards()
 
-    const grouped = useMemo(() => {
-        if (!awards) return {}
+    const { groupedAwards, yearLabels } = useMemo(() => {
+        if (!awards) return { groupedAwards: {}, yearLabels: [] }
 
-        return awards.reduce<Record<string, string[]>>((acc, page) => {
+        const grouped = awards.reduce<Record<string, string[]>>((acc, page) => {
             const year = page.properties.time_period?.select?.name ?? '기타'
             const title = page.properties.awards?.title?.[0]?.plain_text ?? '제목 없음'
-
             if (!acc[year]) acc[year] = []
             acc[year].push(title)
             return acc
         }, {})
+
+        const sortedYears = Object.keys(grouped).sort((a, b) => b.localeCompare(a))
+
+        return { groupedAwards: grouped, yearLabels: sortedYears }
     }, [awards])
 
-    const yearLabels = Object.keys(grouped).sort((a, b) => b.localeCompare(a))
-    const [openStates, setOpenStates] = useState<boolean[]>(yearLabels.map((_, i) => i === 0))
+    const [openStates, setOpenStates] = useState<boolean[]>([])
 
-    const toggleIndex = (index: number) => {
-        setOpenStates((prev) => prev.map((value, i) => (i === index ? !value : value)))
-    }
+    useEffect(() => {
+        if (!awards) return
+
+        const newLabels = Object.keys(
+            awards.reduce<Record<string, string[]>>((acc, page) => {
+                const year = page.properties.time_period?.select?.name ?? '기타'
+                const title = page.properties.awards?.title?.[0]?.plain_text ?? '제목 없음'
+                if (!acc[year]) acc[year] = []
+                acc[year].push(title)
+                return acc
+            }, {})
+        ).sort((a, b) => b.localeCompare(a))
+
+        setOpenStates(newLabels.map((_, i) => i === 0))
+    }, [awards])
+
+    useEffect(() => {
+        if (yearLabels.length === 0) return
+        setOpenStates(yearLabels.map((_, i) => i === 0))
+    }, [yearLabels])
+
+    const toggleIndex = useCallback((index: number) => {
+        setOpenStates((prev) => prev.map((v, i) => (i === index ? !v : v)))
+    }, [])
 
     return (
         <FadeInOnMount className="flex justify-center items-center">
@@ -53,7 +76,7 @@ export default function AwardsPage() {
                                     setIsOpen={() => toggleIndex(index)}
                                 >
                                     <ul className="p-0 md:px-5 list-disc list-inside space-y-2">
-                                        {grouped[year].map((award, i) => (
+                                        {groupedAwards[year].map((award, i) => (
                                             <li key={i}>{award}</li>
                                         ))}
                                     </ul>
