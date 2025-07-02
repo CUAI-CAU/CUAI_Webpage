@@ -16,6 +16,14 @@ const TEMP_MEMBERS_BY_GENERATION = [
         members: [
             { id: 1, name: '쿠아일', major: 'CUAI학과', interest: ['Multimodal', 'CV'] },
             { id: 2, name: '쿠아이', major: 'CUAI학과', interest: ['NLP', 'Data Analysis'] },
+            { id: 3, name: '쿠아삼', major: 'CUAI학과', interest: ['CV'] },
+            { id: 4, name: '쿠아사', major: 'CUAI학과', interest: ['NLP', 'Data Analysis'] },
+            { id: 5, name: '쿠아오', major: 'CUAI학과', interest: ['Multimodal', 'CV'] },
+            { id: 6, name: '쿠아육', major: 'CUAI학과', interest: ['Data Analysis'] },
+            { id: 7, name: '쿠아칠', major: 'CUAI학과', interest: ['Multimodal'] },
+            { id: 8, name: '쿠아팔', major: 'CUAI학과', interest: ['NLP'] },
+            { id: 9, name: '쿠아구', major: 'CUAI학과', interest: ['Multimodal', 'CV'] },
+            { id: 10, name: '쿠아십', major: 'CUAI학과', interest: ['NLP', 'Data Analysis'] },
         ],
     },
 ]
@@ -26,7 +34,7 @@ export default function MembersPage() {
 
     return (
         <FadeInOnMount className="flex justify-center items-center">
-            <TitledSection title="학회원" className="w-11/12 md:w-3/4 xl:w-2/3 2xl:w-1/2">
+            <TitledSection title="학회원" className="w-11/12 md:w-3/4 xl:w-2/3">
                 <div className="text-md md:text-xl text-slate-300 text-center max-w-xs md:max-w-sm">
                     해당 페이지는 추후 업데이트 예정입니다.
                 </div>
@@ -50,7 +58,7 @@ export default function MembersPage() {
                     ))}
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 place-items-center">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7 place-items-center">
                     {TEMP_MEMBERS_BY_GENERATION.find(
                         (section) => section.generation === selectedGeneration
                     )?.members.map((member) => (
