@@ -17,8 +17,12 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from . import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('quiz/', include('quiz.urls')),
+
+    # api landing page (welcome page)
+    path('', views.landing_page, name='landing_page'),
 ]
