@@ -24,10 +24,10 @@ export const ProjectSelector = ({ projects, selectedId, handleChange }: ProjectS
                         className="cursor-pointer transition-all duration-500 hover:translate-x-1 hover:text-slate-100"
                     >
                         <div
-                            className={`flex flex-row items-center gap-3 text-start
+                            className={`flex flex-row items-center gap-3 text-start list-disc
                                     ${selectedId === project.id && 'font-semibold text-slate-100'} `}
                         >
-                            {project.properties['이름'].title[0].plain_text}
+                            - {project.properties.project_name.title[0].plain_text}
                         </div>
                     </button>
                 ))}

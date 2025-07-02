@@ -2,12 +2,26 @@
 
 import { FadeInOnMount, TitledSection, ToggleBox } from '@/components'
 import { AWARDS } from '@/constants/awards'
-import { useState } from 'react'
-// import { useGetAwards } from '@/hooks/useGetAwards'
+import { useMemo, useState } from 'react'
+import { useGetAwards } from '@/hooks/useGetAwards'
 
 export default function AwardsPage() {
-    // const { data: awards, isLoading } = useGetAwards()
+    const { data: awards, isLoading } = useGetAwards()
 
+    const grouped = useMemo(() => {
+        if (!awards) return {}
+
+        return awards.reduce<Record<string, string[]>>((acc, page) => {
+            const year = page.properties.time_period?.select?.name ?? '기타'
+            const title = page.properties.awards?.title?.[0]?.plain_text ?? '제목 없음'
+
+            if (!acc[year]) acc[year] = []
+            acc[year].push(title)
+            return acc
+        }, {})
+    }, [awards])
+
+    const yearLabels = Object.keys(grouped).sort((a, b) => b.localeCompare(a)) // 최신순 정렬
     const [openStates, setOpenStates] = useState<boolean[]>(AWARDS.map((_, i) => i === 0))
 
     const toggleIndex = (index: number) => {
@@ -25,20 +39,29 @@ export default function AwardsPage() {
                 <div className="w-full border-b border-slate-700" />
 
                 <div className="w-full space-y-7">
-                    {AWARDS.map((section, index) => (
-                        <ToggleBox
-                            key={section.label}
-                            title={section.label}
-                            isOpen={openStates[index]}
-                            setIsOpen={() => toggleIndex(index)}
-                        >
-                            <ul className="p-0 md:px-5 list-disc list-inside space-y-2">
-                                {section.awards.map((award, i) => (
-                                    <li key={i}>{award}</li>
-                                ))}
-                            </ul>
-                        </ToggleBox>
-                    ))}
+                    {isLoading ? (
+                        <>
+                            <div className="h-80 bg-slate-800 rounded-2xl " />
+                            <div className="h-20 bg-slate-800 rounded-2xl " />
+                        </>
+                    ) : (
+                        <>
+                            {yearLabels.map((year, index) => (
+                                <ToggleBox
+                                    key={year}
+                                    title={year}
+                                    isOpen={openStates[index]}
+                                    setIsOpen={() => toggleIndex(index)}
+                                >
+                                    <ul className="p-0 md:px-5 list-disc list-inside space-y-2">
+                                        {grouped[year].map((award, i) => (
+                                            <li key={i}>{award}</li>
+                                        ))}
+                                    </ul>
+                                </ToggleBox>
+                            ))}
+                        </>
+                    )}
                 </div>
             </TitledSection>
         </FadeInOnMount>

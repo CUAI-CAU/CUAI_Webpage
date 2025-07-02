@@ -45,23 +45,21 @@ export type MultiSelectProperty = CommonProperty & {
 }
 
 export type ProjectProperties = {
-    ['컨퍼런스']: SelectProperty
-    ['참여자']: MultiSelectProperty
-    ['이름']: TitleProperty
+    conference: SelectProperty
+    participants: MultiSelectProperty
+    project_name: TitleProperty
 }
 
 export type AwardProperties = {
-    ['선택']: SelectProperty
-    ['이름']: TitleProperty
+    time_period: SelectProperty
+    awards: TitleProperty
 }
 
 export type MemberProperties = {
-    ['전화번호']: CommonProperty & { phone_number: string }
-    ['관심 분야']: MultiSelectProperty
-    ['이메일']: CommonProperty & { email: string }
-    ['학번']: RichTextProperty
-    ['전공']: SelectProperty
-    ['이름']: TitleProperty
+    interests: MultiSelectProperty
+    email_address: CommonProperty & { email: string }
+    major: SelectProperty
+    member_name: TitleProperty
 }
 
 export type CommonNotionPage<T> = {
