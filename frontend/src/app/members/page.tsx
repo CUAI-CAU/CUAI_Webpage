@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { FadeInOnMount, TitledSection } from '@/components'
 import { ColoredTag } from '@/components/notion'
+import { UserRound } from 'lucide-react'
 // import { useGetMembers } from '@/hooks/useGetMembers'
 
 const TEMP_MEMBERS_BY_GENERATION = [
@@ -57,7 +58,9 @@ export default function MembersPage() {
                             key={member.id}
                             className="bg-slate-800/90 rounded-2xl w-60 p-5 space-y-5 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]"
                         >
-                            <div className="text-3xl">📎</div>
+                            <div className="text-3xl">
+                                <UserRound />
+                            </div>
                             <div className="flex flex-row items-end gap-2">
                                 <div className="text-xl font-semibold">{member.name}</div>
                                 <p className="text-slate-400 text-sm whitespace-nowrap">({member.major})</p>
