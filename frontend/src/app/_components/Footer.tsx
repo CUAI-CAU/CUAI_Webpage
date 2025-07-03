@@ -15,7 +15,7 @@ export const Footer = () => {
                     bottom-0 mt-20 px-28 py-20 gap-10 bg-[#0E1A2F]"
         >
             {/* left section */}
-            <div className="flex flex-col justify-between items-center md:items-start h-full gap-10">
+            <div className="flex flex-col justify-between items-center md:items-start h-full gap-10 text-slate-300">
                 <div className="flex flex-row gap-7 text-center">
                     {FOOTER_URL.map(({ label, url }, index) => (
                         <button type="button" key={index} onClick={() => window.open(url)} className="cursor-pointer">
@@ -23,7 +23,7 @@ export const Footer = () => {
                         </button>
                     ))}
                 </div>
-                <div className="flex flex-col items-center gap-2 text-slate-300 whitespace-nowrap md:items-start">
+                <div className="flex flex-col items-center gap-2 whitespace-nowrap md:items-start">
                     <p>CUAI CAU</p>
                     <p>이메일 | admin@cuai.kr</p>
                     <p>© 2025 CUAI CAU. All rights reserved.</p>
