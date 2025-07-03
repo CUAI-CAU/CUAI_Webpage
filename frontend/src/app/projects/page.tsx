@@ -43,7 +43,7 @@ export default function ProjectsPage() {
 
     return (
         <FadeInOnMount className="flex justify-center items-center">
-            <TitledSection title="프로젝트" className="w-11/12 md:w-3/4">
+            <TitledSection title="프로젝트" className="w-11/12 md:w-3/4 xl:w-3/5 2xl:w-1/2">
                 <div className="text-md md:text-xl text-slate-300 text-center max-w-xs md:max-w-sm break-keep">
                     주요 프로젝트들을 소개합니다. 하단의 토글을 눌러 학회원들이 어떤 문제를 해결하고, 어떤 기술을
                     시도했는지 확인해보세요.
@@ -51,7 +51,7 @@ export default function ProjectsPage() {
 
                 <div className="w-full border-b border-slate-700" />
 
-                <div className="flex flex-col lg:flex-row w-full space-y-5 lg:space-x-7">
+                <div className="w-full flex flex-col lg:flex-row space-y-5 lg:space-x-7">
                     {/* project type selector  */}
                     <ProjectTypeSelector
                         type={uniqueProjectType}

@@ -21,11 +21,13 @@ export const ProjectSelector = ({ projects, selectedId, handleChange }: ProjectS
                         <button
                             type="button"
                             onClick={() => handleChange(project.id)}
-                            className={`cursor-pointer flex flex-row text-start
+                            className={`w-full cursor-pointer flex flex-row text-start
                             transition-all duration-500 hover:translate-x-1
                             ${selectedId === project.id && 'font-semibold text-slate-100'}`}
                         >
-                            &bull; {project.properties.project_name.title[0]?.plain_text}
+                            <span className="w-full truncate lg:whitespace-normal">
+                                &bull; {project.properties.project_name.title[0]?.plain_text}
+                            </span>
                         </button>
                     </li>
                 ))}
