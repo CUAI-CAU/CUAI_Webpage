@@ -1,5 +1,6 @@
 import { BlockView, CalloutBlockView, ImageBlockView, ParagraphBlockView, VideoBlockView } from '@/types/notion/blocks'
 import Image from 'next/image'
+import { useState } from 'react'
 
 export const BlockRenderer = ({ block }: { block: BlockView }) => {
     switch (block.type) {
@@ -44,9 +45,24 @@ const CalloutBlock = ({ block }: { block: CalloutBlockView }) => {
 }
 
 const ImageBlock = ({ block }: { block: ImageBlockView }) => {
+    const [isLoaded, setIsLoaded] = useState(false)
+
     return (
-        <div className="w-full flex justify-center items-center">
-            <Image src={block.image.file.url} alt="Notion Image" width={1000} height={800} />
+        <div className="w-full flex justify-center items-center relative min-h-[300px]">
+            {!isLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center animate-pulse">
+                    <div className="w-full max-w-[1000px] h-full bg-slate-500 rounded-xl" />
+                </div>
+            )}
+
+            <Image
+                src={block.image?.file?.url}
+                alt="Notion Image"
+                width={1000}
+                height={800}
+                onLoadingComplete={() => setIsLoaded(true)}
+                className={`${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
+            />
         </div>
     )
 }
