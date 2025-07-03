@@ -16,7 +16,7 @@ export const ProjectTypeSelector = ({
             <div className="text-center text-lg">컨퍼런스 목록</div>
             <div className="w-full my-7 border-b border-slate-400" />
             {isLoading ? (
-                <div className="h-96 w-full rounded-xl bg-slate-500 animate-pulse" />
+                <div className="h-10 lg:h-96 w-full rounded-xl bg-slate-500 animate-pulse" />
             ) : (
                 <ul className="flex flex-row lg:flex-col gap-3 overflow-auto [&::-webkit-scrollbar]:hidden">
                     {type.map((name) => (
