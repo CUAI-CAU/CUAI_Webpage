@@ -48,7 +48,7 @@ const ImageBlock = ({ block }: { block: ImageBlockView }) => {
     const [isLoaded, setIsLoaded] = useState(false)
 
     return (
-        <div className="w-full flex justify-center items-center relative min-h-[300px]">
+        <div className="w-full flex justify-center items-center relative min-h-[288px]">
             {!isLoaded && (
                 <div className="absolute inset-0 flex items-center justify-center animate-pulse">
                     <div className="w-full max-w-[1000px] h-full bg-slate-500 rounded-xl" />
@@ -59,7 +59,7 @@ const ImageBlock = ({ block }: { block: ImageBlockView }) => {
                 src={block.image?.file?.url}
                 alt="Notion Image"
                 width={1000}
-                height={800}
+                height={720}
                 onLoadingComplete={() => setIsLoaded(true)}
                 className={`${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}
             />
