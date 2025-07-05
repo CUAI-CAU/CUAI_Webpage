@@ -1,6 +1,6 @@
 export const ProjectSelectorSkeleton = () => {
     return (
-        <div className="flex flex-col w-full p-7 h-24 bg-slate-800 rounded-2xl ">
+        <div className="flex flex-col w-full p-6 h-20 bg-slate-800 rounded-2xl ">
             <div className="w-1/3 h-full bg-slate-500 rounded-xl animate-pulse" />
         </div>
     )
