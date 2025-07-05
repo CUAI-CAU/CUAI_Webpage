@@ -2,16 +2,17 @@
 
 import { axiosInstance } from '@/libs/axios'
 import { Question, UserInfo } from '@/types/quiz'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 interface QuizFormProps {
+    ref: React.RefObject<HTMLDivElement | null>
     quiz: Record<string, Question>
     answers: Record<string, string>
     setAnswers: React.Dispatch<React.SetStateAction<Record<string, string>>>
     userInfo: UserInfo
 }
 
-export const QuizForm = ({ quiz, answers, setAnswers, userInfo }: QuizFormProps) => {
+export const QuizForm = ({ ref, quiz, answers, setAnswers, userInfo }: QuizFormProps) => {
     const [showAnswers, setShowAnswers] = useState(false)
 
     const handleAnswerChange = (key: string, value: string) => {
@@ -49,6 +50,12 @@ export const QuizForm = ({ quiz, answers, setAnswers, userInfo }: QuizFormProps)
             console.error(error)
         }
     }
+
+    useEffect(() => {
+        if (showAnswers && ref.current) {
+            ref.current.scrollIntoView({ behavior: 'smooth' })
+        }
+    }, [showAnswers])
 
     return (
         <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-20">

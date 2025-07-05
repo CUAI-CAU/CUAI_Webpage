@@ -55,7 +55,13 @@ export default function QuizPage() {
                 {isVerified && (
                     <div className="mt-10 max-w-2xl flex flex-col items-center space-y-16">
                         <h3 className="text-3xl font-semibold">Quiz Questions</h3>
-                        <QuizForm quiz={quiz} answers={answers} setAnswers={setAnswers} userInfo={userInfo} />
+                        <QuizForm
+                            ref={scrollRef}
+                            quiz={quiz}
+                            answers={answers}
+                            setAnswers={setAnswers}
+                            userInfo={userInfo}
+                        />
                     </div>
                 )}
             </TitledSection>
