@@ -14,8 +14,11 @@ export default function FaqPage() {
     return (
         <FadeInOnMount className="flex justify-center items-center">
             <TitledSection title="FAQ" className="w-5/6 md:w-3/4 xl:w-2/3 2xl:w-1/2">
+                <div className="text-2xl text-slate-300">자주 묻는 질문</div>
+
+                <div className="w-full border-b border-slate-700" />
+
                 <div className="lg:px-24 flex flex-col items-center space-y-10">
-                    <div className="text-2xl text-slate-300">자주 묻는 질문</div>
                     <div className="flex flex-col items-center space-y-5">
                         {FAQ.map((faq, index) => (
                             <ToggleBox
@@ -29,8 +32,6 @@ export default function FaqPage() {
                         ))}
                     </div>
                 </div>
-
-                <div className="w-full border-b border-slate-700" />
 
                 <div className="flex flex-col items-center space-y-10">
                     <div className="text-2xl text-slate-300 whitespace-nowrap">CUAI에게 더 궁금한 점이 있다면?</div>

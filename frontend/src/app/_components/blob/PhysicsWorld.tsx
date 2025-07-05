@@ -28,7 +28,7 @@ export const PhysicsWorld = () => {
         <Suspense>
             <Physics debug>
                 <mesh ref={meshRef}>
-                    <boxGeometry args={[5, 5, 5]} />
+                    <boxGeometry args={[10, 10, 10]} />
                     <meshStandardMaterial color={0x00ffaa} roughness={0} />
                 </mesh>
             </Physics>

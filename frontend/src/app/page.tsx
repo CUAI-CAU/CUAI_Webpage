@@ -1,5 +1,4 @@
-import { CuaiTitle, Curriculum, Introduction } from './_components'
-import { NipaGpu } from './_components/home/NipaGpu'
+import { CuaiTitle, Curriculum, Introduction, NipaGpu } from './_components'
 
 export default function HomePage() {
     return (

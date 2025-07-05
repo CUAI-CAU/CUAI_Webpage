@@ -40,7 +40,7 @@ export default function AwardsPage() {
 
     return (
         <FadeInOnMount className="flex justify-center items-center">
-            <TitledSection title="수상 내역" className="w-11/12 md:w-3/4 xl:w-2/3 2xl:w-1/2">
+            <TitledSection title="수상 내역" className="w-11/12 md:w-3/4 xl:w-3/5 2xl:w-1/2">
                 <div className="text-md md:text-xl text-slate-300 text-center max-w-xs md:max-w-sm break-keep">
                     학회원들의 지난 수상 내역입니다. 확인 가능한 자료를 기반으로 구성되었으며, 일부 누락된 내용이 있을
                     수 있습니다.

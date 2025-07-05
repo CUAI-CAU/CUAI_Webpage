@@ -2,6 +2,7 @@
 
 import { FadeInOnScroll } from '@/components'
 import { useGetIntroductions } from '@/hooks/useGetInroductions'
+import { IntroductionNotionPage } from '@/types/notion/properties'
 
 interface WhoAreWeCardProps {
     label: string
@@ -19,6 +20,32 @@ const WhoAreWeCard = ({ label, info, description }: WhoAreWeCardProps) => {
             <div className="flex w-3/4 md:w-2/3">{description}</div>
         </div>
     )
+}
+
+const WhoAreWe = ({ introductions }: { introductions: IntroductionNotionPage[] }) => {
+    return (
+        <>
+            {introductions!.map((introduction, index) => {
+                const { label, info, description } = introduction.properties
+
+                return (
+                    <div key={index} className="mb-3 last:mb-0">
+                        <WhoAreWeCard
+                            label={label.title[0].plain_text}
+                            info={info.rich_text[0].plain_text}
+                            description={description.rich_text[0].plain_text}
+                        />
+
+                        {index < introductions!.length - 1 && <div className="border-b border-slate-700 my-5" />}
+                    </div>
+                )
+            })}
+        </>
+    )
+}
+
+const WhoAreWeSkeleton = () => {
+    return <div className="w-full h-[382px] bg-slate-500 rounded-2xl animate-pulse" />
 }
 
 export const Introduction = () => {
@@ -46,27 +73,7 @@ export const Introduction = () => {
 
                     {/* right section */}
                     <div className="col-span-1 flex flex-col p-5 md:p-7 border border-none rounded-3xl bg-slate-800">
-                        {isLoading && <div className="w-full h-80 bg-slate-500 rounded-2xl animate-pulse" />}
-
-                        {introductions &&
-                            introductions.map((introduction, index) => {
-                                const { label, info, description } = introduction.properties
-
-                                return (
-                                    <div key={index} className="mb-3 last:mb-0">
-                                        <WhoAreWeCard
-                                            label={label.title[0].plain_text}
-                                            info={info.rich_text[0].plain_text}
-                                            description={description.rich_text[0].plain_text}
-                                        />
-
-                                        {/* 카드 구분선 */}
-                                        {index < introductions.length - 1 && (
-                                            <div className="border-b border-slate-700 my-5" />
-                                        )}
-                                    </div>
-                                )
-                            })}
+                        {isLoading ? <WhoAreWeSkeleton /> : <WhoAreWe introductions={introductions!} />}
                     </div>
                 </div>
             </section>

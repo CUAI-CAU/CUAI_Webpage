@@ -28,7 +28,8 @@ export const CuaiTitle = () => {
                         </h1>
                     ))}
                 </div>
-                <div className="w-[500px] h-screen hidden md:flex">
+
+                <div className="w-full max-w-md hidden md:flex">
                     <BlobScene />
                 </div>
             </div>
