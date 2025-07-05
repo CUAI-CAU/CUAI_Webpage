@@ -1,8 +1,8 @@
 'use client'
 
-import { axiosInstance } from '@/libs/axios'
+import { useSubmitQuiz } from '@/hooks/quiz/useSubmitQuiz'
 import { Question, UserInfo } from '@/types/quiz'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 interface QuizFormProps {
     ref: React.RefObject<HTMLDivElement | null>
@@ -13,47 +13,17 @@ interface QuizFormProps {
 }
 
 export const QuizForm = ({ ref, quiz, answers, setAnswers, userInfo }: QuizFormProps) => {
-    const [showAnswers, setShowAnswers] = useState(false)
-
-    const handleAnswerChange = (key: string, value: string) => {
-        setAnswers((prev) => ({ ...prev, [key]: value }))
-    }
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-
-        const isAllAnswered = Object.keys(quiz).every((key) => (answers[key] || '').trim() !== '')
-        if (!isAllAnswered) {
-            alert('모든 질문에 답변을 작성해주세요.')
-            return
-        }
-
-        const requestAnswerBody = {
-            name: userInfo.name,
-            email: userInfo.email,
-            ...Object.fromEntries(Object.keys(quiz).map((k, i) => [`ans${i + 1}`, answers[k] || ''])),
-        }
-
-        try {
-            const response = await axiosInstance.post(`/quiz/submit`, requestAnswerBody)
-
-            if (response.status === 200) {
-                alert('제출 성공! 정답을 확인하세요.')
-                setShowAnswers(true)
-            } else {
-                alert('제출에 실패했습니다. 다시 시도해 주세요.')
-            }
-        } catch (error) {
-            alert('오류 발생! 제출에 실패했습니다.')
-            console.error(error)
-        }
-    }
+    const { handleSubmit, showAnswers } = useSubmitQuiz({ quiz, answers, userInfo })
 
     useEffect(() => {
         if (showAnswers && ref.current) {
             ref.current.scrollIntoView({ behavior: 'smooth' })
         }
-    }, [showAnswers])
+    }, [showAnswers, ref])
+
+    const handleAnswerChange = (key: string, value: string) => {
+        setAnswers((prev) => ({ ...prev, [key]: value }))
+    }
 
     return (
         <form onSubmit={handleSubmit} className="flex flex-col items-center space-y-20">
