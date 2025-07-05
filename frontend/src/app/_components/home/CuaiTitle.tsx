@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from 'react'
 import { ScrollDownButton } from '@/components'
-import { CUAI_TITLE } from '@/constants/home'
 import { BlobScene } from '../blob'
+
+const CUAI_TITLE = ['중앙대학교', '인공지능', '학회', 'CUAI']
 
 export const CuaiTitle = () => {
     const [isFontLoaded, setIsFontLoaded] = useState(false)
