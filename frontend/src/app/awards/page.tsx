@@ -63,8 +63,8 @@ export default function AwardsPage() {
                 <div className="w-full space-y-7">
                     {isLoading ? (
                         <>
-                            <div className="h-80 bg-slate-800 rounded-2xl " />
-                            <div className="h-20 bg-slate-800 rounded-2xl " />
+                            <div className="h-80 bg-slate-800 rounded-2xl" />
+                            <div className="h-20 bg-slate-800 rounded-2xl" />
                         </>
                     ) : (
                         <>

@@ -1,7 +1,7 @@
-import { getIntroduction } from '@/utils/notion/introduction'
+import { getIntroductions } from '@/utils/notion/introductions'
 
 export async function GET() {
-    const response = await getIntroduction()
+    const response = await getIntroductions()
 
     return Response.json(response)
 }

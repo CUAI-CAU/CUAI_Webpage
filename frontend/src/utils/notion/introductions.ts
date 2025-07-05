@@ -3,7 +3,7 @@ import { DatabaseObjectResponse } from '@notionhq/client'
 
 const notionPageId = process.env.NOTION_INTRODUCTION_PAGE_ID
 
-export async function getIntroduction(): Promise<DatabaseObjectResponse[]> {
+export async function getIntroductions(): Promise<DatabaseObjectResponse[]> {
     const response = await notionClient.databases.query({
         database_id: notionPageId!,
         sorts: [

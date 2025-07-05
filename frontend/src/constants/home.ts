@@ -1,25 +1,5 @@
 export const CUAI_TITLE = ['중앙대학교', '인공지능', '학회', 'CUAI']
 
-export const WHOAREWE = [
-    {
-        label: 'since',
-        info: '2018',
-        description:
-            '2018년 1학기 ‘CAU BIG DATA’라는 이름의 소규모 학회로 인재개발원 직무연구회에 소속되어 활동을 시작하였습니다.',
-    },
-    {
-        label: '정기 세미나',
-        info: '화요일',
-        description:
-            '인공지능 학습과 프로젝트를 중심으로 경험과 지식을 공유하며, 학회원 간의 소통과 협력을 강화하는 데 중점을 두고 있습니다.',
-    },
-    {
-        label: '운영 기수',
-        info: '8기',
-        description: '최근 2년간 6기 34명, 7기 44명의 수료자를 배출하며 꾸준히 발전하고 있습니다.',
-    },
-]
-
 export const CURRICULUM = [
     {
         title: 'Basic 트랙',

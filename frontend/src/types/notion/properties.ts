@@ -62,6 +62,12 @@ export type MemberProperties = {
     member_name: TitleProperty
 }
 
+export type IntroductionProperties = {
+    label: TitleProperty
+    info: RichTextProperty
+    description: RichTextProperty
+}
+
 export type CommonNotionPage<T> = {
     object: 'page'
     id: string
@@ -82,3 +88,4 @@ export type CommonNotionPage<T> = {
 export type ProjectsNotionPage = CommonNotionPage<ProjectProperties>
 export type AwardsNotionPage = CommonNotionPage<AwardProperties>
 export type MembersNotionPage = CommonNotionPage<MemberProperties>
+export type IntroductionNotionPage = CommonNotionPage<IntroductionProperties>
