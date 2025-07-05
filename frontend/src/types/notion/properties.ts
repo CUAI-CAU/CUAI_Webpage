@@ -44,6 +44,8 @@ export type MultiSelectProperty = CommonProperty & {
     multi_select: Tag[]
 }
 
+// DB Properties
+
 export type ProjectProperties = {
     conference: SelectProperty
     participants: MultiSelectProperty
@@ -68,6 +70,21 @@ export type IntroductionProperties = {
     description: RichTextProperty
 }
 
+export type CurriculumProperties = {
+    label: TitleProperty
+    content: RichTextProperty
+}
+
+export type GpuProperties = {
+    label: TitleProperty
+    content: RichTextProperty
+}
+
+export type FaqProperties = {
+    question: TitleProperty
+    answer: RichTextProperty
+}
+
 export type CommonNotionPage<T> = {
     object: 'page'
     id: string
@@ -85,7 +102,12 @@ export type CommonNotionPage<T> = {
     public_url: string | null
 }
 
+// DB Types
+
 export type ProjectsNotionPage = CommonNotionPage<ProjectProperties>
 export type AwardsNotionPage = CommonNotionPage<AwardProperties>
 export type MembersNotionPage = CommonNotionPage<MemberProperties>
 export type IntroductionNotionPage = CommonNotionPage<IntroductionProperties>
+export type CurriculumNotionPage = CommonNotionPage<CurriculumProperties>
+export type GpuNotionPage = CommonNotionPage<GpuProperties>
+export type FaqNotionPage = CommonNotionPage<FaqProperties>
