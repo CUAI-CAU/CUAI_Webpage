@@ -4,33 +4,25 @@ import { FadeInOnMount, TitledSection } from '@/components'
 import { useEffect, useMemo, useState } from 'react'
 import { useGetAwards } from '@/hooks/useGetAwards'
 import { LabelSelector } from './_components'
+import { groupAwardsByLabel, GroupedAward } from '@/utils/groupAwardsByLabel'
 
-type GroupedAward = { label: string; awards: { awardTitle: string }[] }
+const AwardsSkeleton = () => {
+    return <div className="h-[428px] bg-slate-500 rounded-2xl animate-pulse" />
+}
+
+const Awards = ({ awards }: { awards: GroupedAward }) => {
+    return (
+        <ul className="w-full p-6 bg-slate-800 rounded-2xl text-start space-y-2">
+            {awards && awards.awards.map((award, index) => <li key={index}>&bull; {award.awardTitle}</li>)}
+        </ul>
+    )
+}
 
 export default function AwardsPage() {
     const [selectedLabel, setSelectedLabel] = useState<string | null>(null)
     const { data: awards, isLoading } = useGetAwards()
 
-    const groupedAwards: GroupedAward[] = useMemo(() => {
-        if (!awards) return []
-
-        const grouped = awards.reduce<Record<string, { awardTitle: string }[]>>((acc, award) => {
-            const year = award.properties.time_period.select.name
-            const awardTitle = award.properties.awards.title[0].plain_text
-
-            if (!acc[year]) acc[year] = []
-            acc[year].push({ awardTitle })
-
-            return acc
-        }, {})
-
-        return Object.entries(grouped)
-            .sort(([a], [b]) => b.localeCompare(a))
-            .map(([year, awards]) => ({
-                label: year,
-                awards,
-            }))
-    }, [awards])
+    const groupedAwards = useMemo(() => groupAwardsByLabel(awards), [awards])
 
     useEffect(() => {
         if (groupedAwards.length > 0) setSelectedLabel(groupedAwards[0].label)
@@ -58,16 +50,7 @@ export default function AwardsPage() {
                         />
                     )}
 
-                    {isLoading ? (
-                        <div className="h-80 bg-slate-500 rounded-2xl animate-pulse" />
-                    ) : (
-                        <ul className="w-full p-6 bg-slate-800 rounded-2xl text-start space-y-2">
-                            {selectedAwards &&
-                                selectedAwards.awards.map((award, index) => (
-                                    <li key={index}>&bull; {award.awardTitle}</li>
-                                ))}
-                        </ul>
-                    )}
+                    {isLoading ? <AwardsSkeleton /> : <Awards awards={selectedAwards!} />}
                 </div>
             </TitledSection>
         </FadeInOnMount>

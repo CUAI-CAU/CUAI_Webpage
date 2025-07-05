@@ -33,13 +33,11 @@ export const QuizForm = ({ ref, quiz, answers, setAnswers, userInfo }: QuizFormP
             email: userInfo.email,
             ...Object.fromEntries(Object.keys(quiz).map((k, i) => [`ans${i + 1}`, answers[k] || ''])),
         }
-        console.log(requestAnswerBody)
 
         try {
             const response = await axiosInstance.post(`/quiz/submit`, requestAnswerBody)
 
             if (response.status === 200) {
-                console.log(response)
                 alert('제출 성공! 정답을 확인하세요.')
                 setShowAnswers(true)
             } else {

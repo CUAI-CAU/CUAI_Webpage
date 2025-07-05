@@ -2,13 +2,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import type { SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
-import { axiosInstance } from '@/libs/axios'
+import { useMemberAuth } from '@/hooks/quiz/useMemberAuth'
 
 const schema = z.object({
     name: z.string().min(1),
     email: z.string().email(),
 })
-type FormFields = z.infer<typeof schema>
+export type FormFields = z.infer<typeof schema>
 
 interface MemberAuthProps {
     setIsVerified: React.Dispatch<React.SetStateAction<boolean>>
@@ -16,28 +16,13 @@ interface MemberAuthProps {
 }
 
 export const MemberAuth = ({ setIsVerified, setUserInfo }: MemberAuthProps) => {
+    const { verifyMember } = useMemberAuth(setIsVerified, setUserInfo)
     const { register, handleSubmit } = useForm<FormFields>({
-        defaultValues: {
-            name: '',
-            email: '',
-        },
+        defaultValues: { name: '', email: '' },
         resolver: zodResolver(schema),
     })
 
-    const onSubmit: SubmitHandler<FormFields> = async ({ name, email }) => {
-        try {
-            const params = new URLSearchParams({ name, email }).toString()
-            const response = await axiosInstance.get(`/quiz/verification?${params}`)
-
-            if (response.status === 200 && response.data === 'Success') {
-                setUserInfo({ name, email })
-                setIsVerified(true)
-            }
-        } catch (error) {
-            console.error('회원 인증 중 오류 발생:', error)
-            alert('회원 인증에 실패했습니다. 정보를 다시 확인해 주세요.')
-        }
-    }
+    const onSubmit: SubmitHandler<FormFields> = verifyMember
 
     return (
         <div className="w-full md:w-2/3 lg:w-1/2 flex flex-col p-10 border border-none rounded-2xl bg-slate-800">
