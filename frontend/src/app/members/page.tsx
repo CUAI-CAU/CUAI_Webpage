@@ -11,7 +11,7 @@ export default function MembersPage() {
 
     return (
         <FadeInOnMount className="flex justify-center items-center">
-            <TitledSection title="학회원" className="w-11/12 xl:w-3/4">
+            <TitledSection title="학회원" className="w-11/12 xl:w-5/6">
                 <div className="text-md md:text-xl text-slate-300 text-center max-w-xs md:max-w-sm break-keep">
                     해당 페이지는 추후 업데이트 예정입니다.
                 </div>
@@ -20,12 +20,17 @@ export default function MembersPage() {
 
                 <GenSelector gen={selectedGen} setGen={setSelectedGen} />
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-7 place-items-center">
+                <div className="flex flex-wrap gap-7 items-center justify-center">
                     {isLoading &&
-                        Array.from({ length: 10 }).map((_, index) => (
+                        Array.from({ length: 9 }).map((_, index) => (
                             <div key={index} className="w-72 h-56 rounded-2xl bg-slate-500 animate-pulse" />
                         ))}
-                    {members && members.map((member) => <MemberCard key={member.id} member={member} />)}
+                    {members &&
+                        members.map((member) => (
+                            <div key={member.id} className="[&:nth-last-child(1)]:col-start-2">
+                                <MemberCard member={member} />
+                            </div>
+                        ))}
                 </div>
             </TitledSection>
         </FadeInOnMount>
