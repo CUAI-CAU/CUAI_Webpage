@@ -15,9 +15,12 @@ export const MemberCard = ({ member }: { member: MembersNotionPage }) => {
             <div className="space-y-2">
                 <p className="text-slate-400 text-sm">관심분야</p>
                 <div className="flex flex-wrap gap-2">
-                    {member.properties.interests.multi_select.map((item, i) => (
-                        <ColoredTag key={i} text={item.name} color="gray" />
-                    ))}
+                    {member.properties.interests.multi_select
+                        .slice()
+                        .sort((a, b) => a.name.localeCompare(b.name))
+                        .map((item, i) => (
+                            <ColoredTag key={i} text={item.name} color="gray" />
+                        ))}
                 </div>
             </div>
         </div>
