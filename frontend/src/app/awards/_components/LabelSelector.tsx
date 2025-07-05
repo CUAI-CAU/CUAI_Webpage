@@ -9,7 +9,7 @@ export const LabelSelector = ({ years, label, setLabel, isLoading = false }: Lab
     return (
         <div className="flex justify-center gap-3">
             {isLoading || !years ? (
-                <div className="w-full h-10 bg-slate-500 rounded-2xl animate-pulse" />
+                <div className="w-full h-10 bg-transparent" />
             ) : (
                 years
                     .sort((a, b) => a.localeCompare(b))
