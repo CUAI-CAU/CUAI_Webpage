@@ -1,54 +1,42 @@
 'use client'
 
-import { FadeInOnMount, TitledSection, ToggleBox } from '@/components'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { FadeInOnMount, TitledSection } from '@/components'
+import { useEffect, useMemo, useState } from 'react'
 import { useGetAwards } from '@/hooks/useGetAwards'
+import { LabelSelector } from './_components'
+
+type GroupedAward = { label: string; awards: { awardTitle: string }[] }
 
 export default function AwardsPage() {
+    const [selectedLabel, setSelectedLabel] = useState<string | null>(null)
     const { data: awards, isLoading } = useGetAwards()
 
-    const { groupedAwards, yearLabels } = useMemo(() => {
-        if (!awards) return { groupedAwards: {}, yearLabels: [] }
+    const groupedAwards: GroupedAward[] = useMemo(() => {
+        if (!awards) return []
 
-        const grouped = awards.reduce<Record<string, string[]>>((acc, page) => {
-            const year = page.properties.time_period?.select?.name ?? '기타'
-            const title = page.properties.awards?.title?.[0]?.plain_text ?? '제목 없음'
+        const grouped = awards.reduce<Record<string, { awardTitle: string }[]>>((acc, award) => {
+            const year = award.properties.time_period.select.name
+            const awardTitle = award.properties.awards.title[0].plain_text
+
             if (!acc[year]) acc[year] = []
-            acc[year].push(title)
+            acc[year].push({ awardTitle })
+
             return acc
         }, {})
 
-        const sortedYears = Object.keys(grouped).sort((a, b) => b.localeCompare(a))
-
-        return { groupedAwards: grouped, yearLabels: sortedYears }
-    }, [awards])
-
-    const [openStates, setOpenStates] = useState<boolean[]>([])
-
-    useEffect(() => {
-        if (!awards) return
-
-        const newLabels = Object.keys(
-            awards.reduce<Record<string, string[]>>((acc, page) => {
-                const year = page.properties.time_period?.select?.name ?? '기타'
-                const title = page.properties.awards?.title?.[0]?.plain_text ?? '제목 없음'
-                if (!acc[year]) acc[year] = []
-                acc[year].push(title)
-                return acc
-            }, {})
-        ).sort((a, b) => b.localeCompare(a))
-
-        setOpenStates(newLabels.map((_, i) => i === 0))
+        return Object.entries(grouped)
+            .sort(([a], [b]) => b.localeCompare(a))
+            .map(([year, awards]) => ({
+                label: year,
+                awards,
+            }))
     }, [awards])
 
     useEffect(() => {
-        if (yearLabels.length === 0) return
-        setOpenStates(yearLabels.map((_, i) => i === 0))
-    }, [yearLabels])
+        if (groupedAwards.length > 0) setSelectedLabel(groupedAwards[0].label)
+    }, [groupedAwards])
 
-    const toggleIndex = useCallback((index: number) => {
-        setOpenStates((prev) => prev.map((v, i) => (i === index ? !v : v)))
-    }, [])
+    const selectedAwards = groupedAwards.find((group) => group.label === selectedLabel)
 
     return (
         <FadeInOnMount className="flex justify-center items-center">
@@ -60,29 +48,25 @@ export default function AwardsPage() {
 
                 <div className="w-full border-b border-slate-700" />
 
-                <div className="w-full space-y-7">
+                <div className="w-full space-y-16">
+                    {(isLoading || groupedAwards.length > 0) && (
+                        <LabelSelector
+                            years={groupedAwards.map((g) => g.label)}
+                            label={selectedLabel ?? ''}
+                            setLabel={setSelectedLabel}
+                            isLoading={groupedAwards.length === 0}
+                        />
+                    )}
+
                     {isLoading ? (
-                        <>
-                            <div className="h-80 bg-slate-800 rounded-2xl" />
-                            <div className="h-20 bg-slate-800 rounded-2xl" />
-                        </>
+                        <div className="h-80 bg-slate-500 rounded-2xl animate-pulse" />
                     ) : (
-                        <>
-                            {yearLabels.map((year, index) => (
-                                <ToggleBox
-                                    key={year}
-                                    title={year}
-                                    isOpen={openStates[index]}
-                                    setIsOpen={() => toggleIndex(index)}
-                                >
-                                    <ul className="p-0 md:px-5 list-disc list-inside space-y-2">
-                                        {groupedAwards[year].map((award, i) => (
-                                            <li key={i}>{award}</li>
-                                        ))}
-                                    </ul>
-                                </ToggleBox>
-                            ))}
-                        </>
+                        <ul className="w-full p-6 bg-slate-800 rounded-2xl text-start space-y-2">
+                            {selectedAwards &&
+                                selectedAwards.awards.map((award, index) => (
+                                    <li key={index}>&bull; {award.awardTitle}</li>
+                                ))}
+                        </ul>
                     )}
                 </div>
             </TitledSection>
