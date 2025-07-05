@@ -12,7 +12,7 @@ const AwardsSkeleton = () => {
 
 const Awards = ({ awards }: { awards: GroupedAward }) => {
     return (
-        <ul className="w-full p-6 bg-slate-800 rounded-2xl text-start space-y-2">
+        <ul className="w-full p-7 bg-slate-800 rounded-2xl text-start space-y-3">
             {awards && awards.awards.map((award, index) => <li key={index}>&bull; {award.awardTitle}</li>)}
         </ul>
     )
