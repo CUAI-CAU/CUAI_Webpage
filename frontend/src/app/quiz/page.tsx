@@ -3,31 +3,17 @@
 import { FadeInOnMount, TitledSection } from '@/components'
 import { MemberAuth, QuizForm } from './_components'
 import { useEffect, useRef, useState } from 'react'
-import { Question, UserInfo } from '@/types/quiz'
-import { axiosInstance } from '@/libs/axios'
+import { UserInfo } from '@/types/quiz'
+import { useGetQuestions } from '@/hooks/quiz/useGetQuestions'
 
 export default function QuizPage() {
     const [isVerified, setIsVerified] = useState(false)
     const [userInfo, setUserInfo] = useState<UserInfo>({ name: '', email: '' })
-
-    const [quiz, setQuiz] = useState<Record<string, Question>>({})
     const [answers, setAnswers] = useState<Record<string, string>>({})
 
     const scrollRef = useRef<HTMLDivElement | null>(null)
 
-    useEffect(() => {
-        const fetchQuestions = async () => {
-            try {
-                const { data } = await axiosInstance.get(`quiz/questions`)
-                setQuiz(data)
-            } catch (error) {
-                alert('질문을 불러오는 데 실패했습니다.')
-                console.error(error)
-            }
-        }
-
-        fetchQuestions()
-    }, [])
+    const { quiz } = useGetQuestions()
 
     // 인증 완료 시 퀴즈 질문으로 자동 스크롤
     useEffect(() => {
