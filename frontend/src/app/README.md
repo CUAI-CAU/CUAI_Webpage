@@ -11,7 +11,7 @@
 -   `src/app/page.tsx`에서 사용하는, 공용이 아닌 컴포넌트는  
     `src/app/_components` 폴더에 위치합니다.
 
--   루트 페이지에서 사용하는 상수(`CUAI_TITLE`, `WHOAREWE` 등)를 포함한 모든 상수는  
+-   루트 페이지에서 사용하는 상수(`CURRICULUM, NIPAGPU` 등)를 포함한 모든 상수는  
     `src/constants/home.ts` 파일에 정의되어 있습니다.
 
 -   공용 컴포넌트는 `src/components` 폴더에 위치합니다.
@@ -38,7 +38,7 @@
 │   │   ├── 📁 _components/          # /projects 전용 컴포넌트
 │   │   │   ├── ProjectSelector.tsx
 │   │   │   ├── ProjectRenderer.tsx
-│   │   │   └── Skeleton.tsx
+│   │   │   └── ...
 │   │   └── page.tsx
 │   ├── 📁 quiz/
 │   │   ├── 📁 _components/          # /quiz 전용 컴포넌트
@@ -50,6 +50,5 @@
 │   └── page.tsx                    # 루트 페이지
 ├── 📁 constants/
 │   ├── home.ts                     # 루트 페이지에서 사용하는 상수
-│   ├── awards.ts                   # 서브 페이지 상수 1
-│   └── faq.ts                      # 서브 페이지 상수 2
+│   └── faq.ts                      # 서브 페이지 상수
 ```
