@@ -54,7 +54,7 @@ export const Introduction = () => {
     return (
         <FadeInOnScroll className="flex items-center justify-center min-h-screen">
             <section className="flex flex-col w-5/6 md:w-3/4 xl:w-2/3 2xl:w-1/2 space-y-10">
-                <div className="text-center md:text-start text-5xl font-semibold">학회 소개</div>
+                <div className="text-center md:text-start text-5xl font-semibold break-keep">학회 소개</div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                     {/* left section */}

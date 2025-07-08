@@ -20,7 +20,7 @@ export const NipaGpu = () => {
     return (
         <FadeInOnScroll className="flex items-center justify-center min-h-screen">
             <section className="flex flex-col justify-center items-center w-5/6 md:w-3/4 lg:w-2/3 xl:w-1/2 2xl:w-1/3 space-y-10 text-center">
-                <div className="text-5xl font-semibold">NIPA GPU 서버</div>
+                <div className="text-5xl font-semibold break-keep">NIPA GPU 서버</div>
 
                 {isLoading && <Skeleton />}
                 {!isLoading &&
