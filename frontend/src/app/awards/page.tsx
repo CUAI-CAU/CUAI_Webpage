@@ -3,12 +3,8 @@
 import { FadeInOnMount, TitledSection } from '@/components'
 import { useEffect, useMemo, useState } from 'react'
 import { useGetAwards } from '@/hooks/useGetAwards'
-import { LabelSelector } from './_components'
+import { AwardsSkeleton, LabelSelector } from './_components'
 import { groupAwardsByLabel, GroupedAward } from '@/utils/groupAwardsByLabel'
-
-const AwardsSkeleton = () => {
-    return <div className="h-[428px] bg-slate-500 rounded-2xl animate-pulse" />
-}
 
 const Awards = ({ awards }: { awards: GroupedAward }) => {
     return (
@@ -32,15 +28,15 @@ export default function AwardsPage() {
 
     return (
         <FadeInOnMount className="flex justify-center items-center">
-            <TitledSection title="수상 내역" className="w-11/12 md:w-3/4 xl:w-3/5 2xl:w-1/2">
+            <TitledSection title="수상 내역" className="w-full max-w-[1280px] px-8">
                 <div className="text-md md:text-xl text-slate-300 text-center max-w-xs md:max-w-sm break-keep">
                     학회원들의 지난 수상 내역입니다. 확인 가능한 자료를 기반으로 구성되었으며, 일부 누락된 내용이 있을
                     수 있습니다.
                 </div>
 
-                <div className="w-full border-b border-slate-700" />
+                <hr className="w-full border-slate-700" />
 
-                <div className="w-full space-y-16">
+                <div className="w-full max-w-[960px] space-y-16">
                     {(isLoading || groupedAwards.length > 0) && (
                         <LabelSelector
                             years={groupedAwards.map((g) => g.label)}
