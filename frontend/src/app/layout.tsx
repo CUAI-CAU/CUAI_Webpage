@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import '../styles/globals.css'
+import '../styles/global.css'
 import { Footer, NavBar } from './_components'
 import Providers from './providers'
 
@@ -26,7 +26,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="kr">
-            <body className={`${pretendard.variable} min-w-xs overflow-x-hidden overflow-y-scroll`}>
+            <body className={`${pretendard.variable} overflow-x-hidden overflow-y-scroll`}>
                 <NavBar />
                 <Providers>
                     <main>{children}</main>

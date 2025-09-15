@@ -15,4 +15,18 @@ body {
     background: var(--background);
     color: var(--foreground);
     font-family: pretendard, Arial, Helvetica, sans-serif;
+    min-width: 360px;
+}
+
+@theme {
+    --animate-wave: wave 2s linear infinite;
+
+    @keyframes wave {
+        0% {
+            background-position: 200% 0;
+        }
+        100% {
+            background-position: -200% 0;
+        }
+    }
 }
