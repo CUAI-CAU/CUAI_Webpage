@@ -3,6 +3,7 @@
 import { FadeInOnScroll } from '@/components'
 import { useGetIntroductions } from '@/hooks/useGetInroductions'
 import { IntroductionNotionPage } from '@/types/notion/properties'
+import { WhoAreWeSkeleton } from './Skeleton'
 
 interface WhoAreWeCardProps {
     label: string
@@ -42,10 +43,6 @@ const WhoAreWe = ({ introductions }: { introductions: IntroductionNotionPage[] }
             })}
         </>
     )
-}
-
-const WhoAreWeSkeleton = () => {
-    return <div className="w-full h-[382px] bg-slate-500 rounded-2xl animate-pulse" />
 }
 
 export const Introduction = () => {

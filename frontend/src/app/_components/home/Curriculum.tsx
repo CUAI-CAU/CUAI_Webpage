@@ -4,25 +4,10 @@ import { useState } from 'react'
 import { FadeInOnScroll } from '@/components'
 import { MoveUpRight } from 'lucide-react'
 import { useGetCurriculum } from '@/hooks/useGetCurriculum'
-
-const Skeleton = () => {
-    return (
-        <div className="flex flex-col lg:flex-row gap-5">
-            {Array.from({ length: 3 }).map((_, index) => (
-                <div
-                    key={index}
-                    className="w-full min-w-[243px] h-44 lg:h-[324px] p-7 space-y-5 bg-slate-700 rounded-2xl animate-pulse"
-                >
-                    <div className="w-32 h-8 bg-slate-500 rounded-lg animate-pulse" />
-                    <div className="w-full h-16 lg:h-36 bg-slate-500 rounded-lg animate-pulse" />
-                </div>
-            ))}
-        </div>
-    )
-}
+import { CurriculumSkeleton } from './Skeleton'
 
 export const Curriculum = () => {
-    const { data: curri, isLoading } = useGetCurriculum()
+    const { data: curri } = useGetCurriculum()
     const [selectedIndex, setSelectedIndex] = useState<number>(-1)
 
     const getCardClassName = (index: number) => {
@@ -45,8 +30,7 @@ export const Curriculum = () => {
         <FadeInOnScroll className="flex items-center justify-center min-h-screen">
             <section className="flex flex-col w-5/6 md:w-3/4 xl:w-2/3 2xl:w-1/2 space-y-10">
                 <div className="flex text-center md:text-start text-5xl font-semibold break-keep">커리큘럼</div>
-                {isLoading && <Skeleton />}
-                {!isLoading && curri && (
+                {curri ? (
                     <div className="flex flex-col lg:flex-row gap-5">
                         {curri.map((c, index) => (
                             <div
@@ -65,6 +49,8 @@ export const Curriculum = () => {
                             </div>
                         ))}
                     </div>
+                ) : (
+                    <CurriculumSkeleton />
                 )}
             </section>
         </FadeInOnScroll>
