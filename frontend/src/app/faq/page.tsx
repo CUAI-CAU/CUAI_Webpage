@@ -20,7 +20,7 @@ export default function FaqPage() {
     return (
         <FadeInOnMount className="flex justify-center items-center">
             <TitledSection title="FAQ" className="w-full max-w-[1280px] px-8">
-                <div className="text-2xl text-slate-300">자주 묻는 질문</div>
+                <p className="text-2xl text-slate-300">자주 묻는 질문</p>
 
                 <hr className="w-full border-slate-700" />
 

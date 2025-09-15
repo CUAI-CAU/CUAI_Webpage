@@ -25,9 +25,9 @@ export default function QuizPage() {
     return (
         <FadeInOnMount className="flex justify-center items-center">
             <TitledSection title="과제 제출" className="w-full max-w-[1280px] px-8">
-                <div className="text-md md:text-xl text-slate-300 text-center max-w-xs md:max-w-sm break-keep">
+                <p className="text-md md:text-xl text-slate-300 text-center max-w-xs md:max-w-sm break-keep">
                     베이직 트랙 학회원들이 매주 과제를 제출하는 공간입니다. 회원 확인을 진행해주세요.
-                </div>
+                </p>
 
                 <div ref={scrollRef} className="w-full border-b border-slate-700" />
 

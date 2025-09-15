@@ -12,9 +12,9 @@ export default function MembersPage() {
     return (
         <FadeInOnMount className="flex justify-center items-center">
             <TitledSection title="학회원" className="w-full max-w-[1280px] px-8">
-                <div className="text-md md:text-xl text-slate-300 text-center max-w-xs md:max-w-sm break-keep">
+                <p className="text-md md:text-xl text-slate-300 text-center max-w-xs md:max-w-sm break-keep">
                     해당 페이지는 추후 업데이트 예정입니다.
-                </div>
+                </p>
 
                 <hr className="w-full border-slate-700" />
 
