@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { FadeInOnMount, TitledSection } from '@/components'
 import { useGetProjects } from '@/hooks/useGetProjects'
-import { ConferenceSelector, ProjectSelector, ProjectSelectorSkeleton, ProjectArticle } from './_components'
+import { ConferenceSelector, ProjectSelector, ProjectArticle } from './_components'
 
 export default function ProjectsPage() {
     const { data: projects, isLoading } = useGetProjects()
@@ -13,7 +13,22 @@ export default function ProjectsPage() {
 
     // 컨퍼런스 목록 추출
     const uniqueConferences = useMemo(() => {
-        return [...new Set(projects?.map((p) => p.properties?.conference?.select?.name).filter(Boolean))]
+        const conferences = [
+            ...new Set(projects?.map((p) => p.properties?.conference?.select?.name).filter(Boolean)),
+        ] as string[]
+
+        return conferences.sort((a, b) => {
+            const [yearA, seasonA] = a.split(' ')
+            const [yearB, seasonB] = b.split(' ')
+
+            // 연도 내림차순
+            const yearDiff = parseInt(yearB) - parseInt(yearA)
+            if (yearDiff !== 0) return yearDiff
+
+            // 시즌 순서: 동계 < 하계
+            const seasonOrder = { 동계: 0, 하계: 1 } as const
+            return seasonOrder[seasonA as keyof typeof seasonOrder] - seasonOrder[seasonB as keyof typeof seasonOrder]
+        })
     }, [projects])
 
     // 현재 선택된 타입의 프로젝트 목록
@@ -24,12 +39,14 @@ export default function ProjectsPage() {
 
     // 초기 선택값 설정
     useEffect(() => {
-        if (projects?.length) {
-            const first = projects[0]
-            setSelectedConference(first.properties?.conference?.select?.name ?? null)
-            setSelectedProjectId(first.id)
+        if (projects?.length && uniqueConferences.length > 0) {
+            const firstConference = uniqueConferences[0]
+            setSelectedConference(firstConference)
+
+            const firstProject = projects.find((p) => p.properties.conference.select.name === firstConference)
+            setSelectedProjectId(firstProject?.id ?? null)
         }
-    }, [projects])
+    }, [projects, uniqueConferences])
 
     // 타입 변경 시 해당 타입의 첫 프로젝트로 선택 갱신
     useEffect(() => {
