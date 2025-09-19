@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { NAVIGATION_ITEM } from './NavBar'
 
+/* eslint-disable @next/next/no-img-element */
 export const NavBarDesktop = () => {
     return (
         <div className="hidden md:flex items-center justify-between w-full h-20 px-20 py-12 bg-[#0e1a2f40] backdrop-blur-sm">

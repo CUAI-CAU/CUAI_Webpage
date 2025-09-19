@@ -8,6 +8,7 @@ const FOOTER_URL = [
     { label: 'YouTube', url: 'https://www.youtube.com/@cuai177' },
 ]
 
+/* eslint-disable @next/next/no-img-element */
 export const Footer = () => {
     return (
         <footer
