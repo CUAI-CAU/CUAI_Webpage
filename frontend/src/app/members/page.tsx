@@ -22,7 +22,8 @@ export default function MembersPage() {
         <FadeInOnMount className="flex justify-center items-center">
             <TitledSection title="학회원" className="w-full max-w-[1280px] px-8">
                 <p className="text-md md:text-xl text-slate-300 text-center max-w-xs md:max-w-sm break-keep">
-                    해당 페이지는 추후 업데이트 예정입니다.
+                    학회원들을 소개합니다. 상단에서 기수를 선택하면, 각 학회원이 속한 트랙과 관심 분야를 확인할 수
+                    있습니다.
                 </p>
 
                 <hr className="w-full border-slate-700" />
