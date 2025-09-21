@@ -30,13 +30,17 @@ export default function MembersPage() {
                 <GenSelector gen={selectedGen} setGen={setSelectedGen} />
 
                 <div className="flex flex-wrap gap-7 items-center justify-center">
-                    {isLoading && Array.from({ length: 9 }).map((_, index) => <CardSkeleton key={index} />)}
-                    {sortedMembers &&
+                    {isLoading ? (
+                        Array.from({ length: 9 }).map((_, index) => <CardSkeleton key={index} />)
+                    ) : sortedMembers.length > 0 ? (
                         sortedMembers.map((member) => (
                             <div key={member.id} className="[&:nth-last-child(1)]:col-start-2">
                                 <MemberCard member={member} />
                             </div>
-                        ))}
+                        ))
+                    ) : (
+                        <div className="py-20 text-slate-300">to be updated...</div>
+                    )}
                 </div>
             </TitledSection>
         </FadeInOnMount>
