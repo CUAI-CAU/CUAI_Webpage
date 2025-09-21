@@ -47,9 +47,10 @@ export type MultiSelectProperty = CommonProperty & {
 // DB Properties
 
 export type ProjectProperties = {
+    project_name: TitleProperty
     conference: SelectProperty
     participants: MultiSelectProperty
-    project_name: TitleProperty
+    prize: RichTextProperty
 }
 
 export type AwardProperties = {

@@ -21,12 +21,10 @@ export default function ProjectsPage() {
             const [yearA, seasonA] = a.split(' ')
             const [yearB, seasonB] = b.split(' ')
 
-            // 연도 내림차순
-            const yearDiff = parseInt(yearB) - parseInt(yearA)
+            const yearDiff = parseInt(yearB) - parseInt(yearA) // 연도 내림차순
             if (yearDiff !== 0) return yearDiff
 
-            // 시즌 순서: 동계 < 하계
-            const seasonOrder = { 동계: 0, 하계: 1 } as const
+            const seasonOrder = { 동계: 0, 하계: 1 } as const // 시즌 순서: 동계 < 하계
             return seasonOrder[seasonA as keyof typeof seasonOrder] - seasonOrder[seasonB as keyof typeof seasonOrder]
         })
     }, [projects])
@@ -34,7 +32,18 @@ export default function ProjectsPage() {
     // 현재 선택된 타입의 프로젝트 목록
     const filteredProjects = useMemo(() => {
         if (!projects || !selectedConference) return []
-        return projects.filter((p) => p.properties.conference.select.name === selectedConference)
+
+        const projectsByConference = projects.filter((p) => p.properties.conference.select.name === selectedConference)
+
+        return projectsByConference.sort((a, b) => {
+            const prizeA = a.properties?.prize?.rich_text?.[0]?.plain_text
+            const prizeB = b.properties?.prize?.rich_text?.[0]?.plain_text
+
+            const numA = prizeA ? parseInt(prizeA) : 0
+            const numB = prizeB ? parseInt(prizeB) : 0
+
+            return numA - numB // prize 오름차순 정렬
+        })
     }, [projects, selectedConference])
 
     // 초기 선택값 설정
