@@ -58,10 +58,11 @@ export type AwardProperties = {
 }
 
 export type MemberProperties = {
-    interests: MultiSelectProperty
-    email_address: CommonProperty & { email: string }
-    major: SelectProperty
     member_name: TitleProperty
+    year: MultiSelectProperty
+    major: SelectProperty
+    interests: MultiSelectProperty
+    track: SelectProperty
 }
 
 export type IntroductionProperties = {

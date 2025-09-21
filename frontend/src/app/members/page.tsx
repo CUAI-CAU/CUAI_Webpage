@@ -7,7 +7,16 @@ import { useState } from 'react'
 
 export default function MembersPage() {
     const [selectedGen, setSelectedGen] = useState(8)
-    const { data: members, isLoading } = useGetMembers()
+    const { data: members, isLoading } = useGetMembers(String(selectedGen))
+    const ADMIN = '운영진'
+
+    const sortedMembers = members
+        ? [...members].sort((a, b) => {
+              const aIsAdmin = a.properties.track.select?.name === ADMIN ? 0 : 1
+              const bIsAdmin = b.properties.track.select?.name === ADMIN ? 0 : 1
+              return aIsAdmin - bIsAdmin
+          })
+        : []
 
     return (
         <FadeInOnMount className="flex justify-center items-center">
@@ -22,8 +31,8 @@ export default function MembersPage() {
 
                 <div className="flex flex-wrap gap-7 items-center justify-center">
                     {isLoading && Array.from({ length: 9 }).map((_, index) => <CardSkeleton key={index} />)}
-                    {members &&
-                        members.map((member) => (
+                    {sortedMembers &&
+                        sortedMembers.map((member) => (
                             <div key={member.id} className="[&:nth-last-child(1)]:col-start-2">
                                 <MemberCard member={member} />
                             </div>
