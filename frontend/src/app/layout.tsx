@@ -3,6 +3,7 @@ import localFont from 'next/font/local'
 import '../styles/global.css'
 import { Footer, NavBar } from './_components'
 import Providers from './providers'
+import GA from '@/libs/GA'
 
 const pretendard = localFont({
     src: [
@@ -25,8 +26,11 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang="kr">
+        <html lang="ko">
             <body className={`${pretendard.variable} overflow-x-hidden overflow-y-scroll`}>
+                {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+                    <GA gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+                ) : null}
                 <NavBar />
                 <Providers>
                     <main>{children}</main>
