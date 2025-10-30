@@ -2,19 +2,19 @@
 
 import * as motion from 'motion/react-client'
 import { SquareCheckBig, Trophy, X } from 'lucide-react'
-import { NewsNotionPage } from '@/types/notion/properties'
+import { useGetNews } from '@/hooks/useGetNews'
 
 interface NewsToastProps {
-    news: NewsNotionPage[]
     onClose: () => void
 }
 
-export const NewsToast = ({ news, onClose }: NewsToastProps) => {
-    // const goToAwardsPage = () => router.push('/awards')
+export const NewsToast = ({ onClose }: NewsToastProps) => {
     const handleClickX = (e: React.MouseEvent) => {
         e.stopPropagation()
         onClose()
     }
+
+    const { data: news } = useGetNews()
 
     if (!news || news.length === 0) return <></>
 

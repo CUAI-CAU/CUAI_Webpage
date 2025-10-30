@@ -1,4 +1,4 @@
-import { CurriculumNotionPage, GpuNotionPage, IntroductionNotionPage, NewsNotionPage } from '@/types/notion/properties'
+import { CurriculumNotionPage, GpuNotionPage, IntroductionNotionPage } from '@/types/notion/properties'
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
 
@@ -26,13 +26,5 @@ export async function fetchGpu(): Promise<GpuNotionPage[]> {
     })
 
     if (!res.ok) throw new Error('Failed to fetch main page gpu')
-    return res.json()
-}
-
-export async function fetchNews(): Promise<NewsNotionPage[]> {
-    const res = await fetch(`${baseUrl}/api/main/news`, {
-        next: { revalidate: 600 },
-    })
-    if (!res.ok) throw new Error('Failed to fetch main page news')
     return res.json()
 }
