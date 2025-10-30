@@ -20,6 +20,7 @@ body {
 
 @theme {
     --animate-wave: wave 2s linear infinite;
+    --animate-fade-in: fadeIn 0.2s ease-out forwards;
 
     @keyframes wave {
         0% {
@@ -27,6 +28,15 @@ body {
         }
         100% {
             background-position: -200% 0;
+        }
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
         }
     }
 }

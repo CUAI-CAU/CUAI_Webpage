@@ -5,6 +5,9 @@ import { useEffect, useState } from 'react'
 export const useGetQuestions = () => {
     const [quiz, setQuiz] = useState<Record<string, Question>>({})
     const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState<string | null>(null)
+
+    const clearError = () => setError(null)
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -13,7 +16,7 @@ export const useGetQuestions = () => {
                 setQuiz(data)
             } catch (error) {
                 console.error(error)
-                alert('질문을 불러오는 데 실패했습니다.')
+                setError('질문을 불러올 수 없습니다.')
             } finally {
                 setIsLoading(false)
             }
@@ -22,5 +25,5 @@ export const useGetQuestions = () => {
         fetchQuestions()
     }, [])
 
-    return { quiz, isLoading }
+    return { quiz, isLoading, error, clearError }
 }
