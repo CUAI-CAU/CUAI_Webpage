@@ -23,7 +23,7 @@ export const NewsToast = ({ onClose }: NewsToastProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: 'spring', stiffness: 50, damping: 14 }}
-            className="fixed bottom-0 left-0 z-50 max-w-[24rem] m-3 p-5 space-y-2 cursor-pointer rounded-[1rem] bg-slate-200"
+            className="fixed bottom-0 left-0 z-50 min-w-[20rem] max-w-[24rem] m-3 p-5 space-y-2 cursor-pointer rounded-[1rem] bg-slate-200"
         >
             <div className="w-fit p-3 rounded-full bg-slate-700">
                 <Trophy className="text-slate-100" />
