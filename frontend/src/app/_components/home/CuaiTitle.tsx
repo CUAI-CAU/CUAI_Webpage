@@ -3,11 +3,14 @@
 import { useEffect, useState } from 'react'
 import { ScrollDownButton } from '@/components'
 import { BlobScene } from '../blob'
+import { NewsToast } from './NewsToast'
+import { NewsNotionPage } from '@/types/notion/properties'
 
 const CUAI_TITLE = ['중앙대학교', '인공지능', '학회', 'CUAI']
 
-export const CuaiTitle = () => {
+export const CuaiTitle = ({ news }: { news: NewsNotionPage[] }) => {
     const [isFontLoaded, setIsFontLoaded] = useState(false)
+    const [showNews, setShowNews] = useState(true)
 
     useEffect(() => {
         document.fonts.ready.then(() => setIsFontLoaded(true))
@@ -38,6 +41,8 @@ export const CuaiTitle = () => {
             <div className="absolute bottom-10">
                 <ScrollDownButton />
             </div>
+
+            {showNews && <NewsToast news={news} onClose={() => setShowNews(false)} />}
         </section>
     )
 }

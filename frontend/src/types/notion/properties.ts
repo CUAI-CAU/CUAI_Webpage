@@ -87,6 +87,10 @@ export type FaqProperties = {
     answer: RichTextProperty
 }
 
+export type NewsProperties = {
+    title: TitleProperty
+}
+
 export type CommonNotionPage<T> = {
     object: 'page'
     id: string
@@ -113,3 +117,4 @@ export type IntroductionNotionPage = CommonNotionPage<IntroductionProperties>
 export type CurriculumNotionPage = CommonNotionPage<CurriculumProperties>
 export type GpuNotionPage = CommonNotionPage<GpuProperties>
 export type FaqNotionPage = CommonNotionPage<FaqProperties>
+export type NewsNotionPage = CommonNotionPage<NewsProperties>
