@@ -33,7 +33,9 @@ export default function ProjectsPage() {
     const filteredProjects = useMemo(() => {
         if (!projects || !selectedConference) return []
 
-        const projectsByConference = projects.filter((p) => p.properties.conference.select.name === selectedConference)
+        const projectsByConference = projects.filter(
+            (p) => p.properties?.conference?.select?.name === selectedConference
+        )
 
         return projectsByConference.sort((a, b) => {
             const prizeA = a.properties?.prize?.rich_text?.[0]?.plain_text
