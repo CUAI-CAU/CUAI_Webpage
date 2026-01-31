@@ -1,5 +1,9 @@
+'use client'
+
 import { FadeInOnScroll } from '@/components'
+import { useGetIntroductions } from '@/hooks/useGetInroductions'
 import { IntroductionNotionPage } from '@/types/notion/properties'
+import { WhoAreWeSkeleton } from './Skeleton'
 
 interface WhoAreWeCardProps {
     label: string
@@ -22,7 +26,7 @@ const WhoAreWeCard = ({ label, info, description }: WhoAreWeCardProps) => {
 const WhoAreWe = ({ introductions }: { introductions: IntroductionNotionPage[] }) => {
     return (
         <>
-            {introductions.map((introduction, index) => {
+            {introductions!.map((introduction, index) => {
                 const { label, info, description } = introduction.properties
 
                 return (
@@ -41,7 +45,9 @@ const WhoAreWe = ({ introductions }: { introductions: IntroductionNotionPage[] }
     )
 }
 
-export const Introduction = ({ introductions }: { introductions: IntroductionNotionPage[] }) => {
+export const Introduction = () => {
+    const { data: introductions, isLoading } = useGetIntroductions()
+
     return (
         <FadeInOnScroll className="flex items-center justify-center min-h-screen">
             <section className="flex flex-col w-5/6 md:w-3/4 xl:w-2/3 2xl:w-1/2 space-y-10">
@@ -64,7 +70,7 @@ export const Introduction = ({ introductions }: { introductions: IntroductionNot
 
                     {/* right section */}
                     <div className="col-span-1 flex flex-col p-5 md:p-7 border border-none rounded-3xl bg-slate-800">
-                        <WhoAreWe introductions={introductions} />
+                        {isLoading ? <WhoAreWeSkeleton /> : <WhoAreWe introductions={introductions!} />}
                     </div>
                 </div>
             </section>

@@ -3,9 +3,11 @@
 import { useState } from 'react'
 import { FadeInOnScroll } from '@/components'
 import { MoveUpRight } from 'lucide-react'
-import { CurriculumNotionPage } from '@/types/notion/properties'
+import { useGetCurriculum } from '@/hooks/useGetCurriculum'
+import { CurriculumSkeleton } from './Skeleton'
 
-export const Curriculum = ({ curriculums }: { curriculums: CurriculumNotionPage[] }) => {
+export const Curriculum = () => {
+    const { data: curri } = useGetCurriculum()
     const [selectedIndex, setSelectedIndex] = useState<number>(-1)
 
     const getCardClassName = (index: number) => {
@@ -28,22 +30,28 @@ export const Curriculum = ({ curriculums }: { curriculums: CurriculumNotionPage[
         <FadeInOnScroll className="flex items-center justify-center min-h-screen">
             <section className="flex flex-col w-5/6 md:w-3/4 xl:w-2/3 2xl:w-1/2 space-y-10">
                 <div className="flex text-center md:text-start text-5xl font-semibold break-keep">커리큘럼</div>
-                <div className="flex flex-col lg:flex-row gap-5">
-                    {curriculums.map((c, index) => (
-                        <div
-                            key={index}
-                            onMouseEnter={() => setSelectedIndex(index)}
-                            onMouseLeave={() => setSelectedIndex(-1)}
-                            className={getCardClassName(index)}
-                        >
-                            <div className="flex flex-row justify-between items-center text-2xl font-medium">
-                                <div>{c.properties.label.title[0].plain_text}</div>
-                                <MoveUpRight />
+                {curri ? (
+                    <div className="flex flex-col lg:flex-row gap-5">
+                        {curri.map((c, index) => (
+                            <div
+                                key={index}
+                                onMouseEnter={() => setSelectedIndex(index)}
+                                onMouseLeave={() => setSelectedIndex(-1)}
+                                className={getCardClassName(index)}
+                            >
+                                <div className="flex flex-row justify-between items-center text-2xl font-medium">
+                                    <div>{c.properties.label.title[0].plain_text}</div>
+                                    <MoveUpRight />
+                                </div>
+                                <div className="whitespace-pre-line">
+                                    {c.properties.content.rich_text[0].plain_text}
+                                </div>
                             </div>
-                            <div className="whitespace-pre-line">{c.properties.content.rich_text[0].plain_text}</div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
+                ) : (
+                    <CurriculumSkeleton />
+                )}
             </section>
         </FadeInOnScroll>
     )
