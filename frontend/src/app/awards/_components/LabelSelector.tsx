@@ -1,3 +1,5 @@
+import { LabelSelectorSkeleton } from './Skeleton'
+
 interface LabelSelectorProps {
     years: string[] | null
     label: string
@@ -9,7 +11,7 @@ export const LabelSelector = ({ years, label, setLabel, isLoading = false }: Lab
     return (
         <div className="flex justify-center gap-3">
             {isLoading || !years ? (
-                <div className="w-full h-10 bg-transparent" />
+                <LabelSelectorSkeleton />
             ) : (
                 years
                     .sort((a, b) => a.localeCompare(b))

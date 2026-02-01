@@ -1,4 +1,4 @@
-export * from './ProjectTypeSelector'
+export * from './ConferenceSelector'
 export * from './ProjectSelector'
-export * from './ProjectRenderer'
+export * from './ProjectArticle'
 export * from './Skeleton'

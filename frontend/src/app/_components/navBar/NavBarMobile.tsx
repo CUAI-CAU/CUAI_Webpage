@@ -33,6 +33,7 @@ export const HamburgerIcon = ({ isOpen, onClick }: HamburgerIconProps) => {
     )
 }
 
+/* eslint-disable @next/next/no-img-element */
 export const NavBarMobile = () => {
     const [isOpen, setIsOpen] = useState(false)
     const close = () => setIsOpen(false)

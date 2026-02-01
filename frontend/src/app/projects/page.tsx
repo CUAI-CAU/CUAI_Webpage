@@ -3,26 +3,25 @@
 import { useEffect, useMemo, useState } from 'react'
 import { FadeInOnMount, TitledSection } from '@/components'
 import { useGetProjects } from '@/hooks/useGetProjects'
-import { ProjectRenderer, ProjectSelector, ProjectSelectorSkeleton, ProjectTypeSelector } from './_components'
+import { ConferenceSelector, ProjectSelector, ProjectArticle } from './_components'
 
 export default function ProjectsPage() {
     const { data: projects, isLoading } = useGetProjects()
 
-    const [selectedProjectType, setSelectedProjectType] = useState<string | null>(null)
+    const [selectedConference, setSelectedConference] = useState<string | null>(null)
     const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null)
 
-    const normalizeProjectType = (value: string) => value.replace(/\s+/g, ' ').trim()
+    const normalizeConference = (value: string) => value.replace(/\s+/g, ' ').trim()
 
-    // 프로젝트 타입(컨퍼런스) 목록 추출
-    const uniqueProjectTypes = useMemo(() => {
-        const parseProjectType = (value: string) => {
-            const normalized = normalizeProjectType(value)
+    // 컨퍼런스 목록 추출 (연도 내림차순, 같은 연도면 동계 -> 하계)
+    const uniqueConferences = useMemo(() => {
+        const parseConference = (value: string) => {
+            const normalized = normalizeConference(value)
 
             const yearMatch = normalized.match(/(\d{4})/)
             const year = yearMatch ? Number(yearMatch[1]) : -1
 
             // Season priority (higher first)
-            // If you add more seasons later, extend this mapping.
             const seasonPriority = normalized.includes('동계') ? 2 : normalized.includes('하계') ? 1 : 0
 
             return { normalized, year, seasonPriority }
@@ -33,13 +32,13 @@ export default function ProjectsPage() {
                 projects
                     ?.map((p) => p.properties?.conference?.select?.name)
                     .filter(Boolean)
-                    .map((name) => normalizeProjectType(name))
+                    .map((name) => normalizeConference(name))
             ),
         ]
 
         return unique.sort((a, b) => {
-            const pa = parseProjectType(a)
-            const pb = parseProjectType(b)
+            const pa = parseConference(a)
+            const pb = parseConference(b)
 
             if (pa.year !== pb.year) return pb.year - pa.year
             if (pa.seasonPriority !== pb.seasonPriority) return pb.seasonPriority - pa.seasonPriority
@@ -49,28 +48,42 @@ export default function ProjectsPage() {
 
     // 현재 선택된 타입의 프로젝트 목록
     const filteredProjects = useMemo(() => {
-        if (!projects || !selectedProjectType) return []
-        const selected = normalizeProjectType(selectedProjectType)
-        return projects.filter((p) => {
-            const name = p.properties?.conference?.select?.name
-            if (!name) return false
-            return normalizeProjectType(name) === selected
+        if (!projects || !selectedConference) return []
+
+        const selected = normalizeConference(selectedConference)
+
+        const projectsByConference = projects.filter(
+            (p) => {
+                const conf = p.properties?.conference?.select?.name
+                return conf ? normalizeConference(conf) === selected : false
+            }
+        )
+
+        return projectsByConference.sort((a, b) => {
+            const prizeA = a.properties?.prize?.rich_text?.[0]?.plain_text
+            const prizeB = b.properties?.prize?.rich_text?.[0]?.plain_text
+
+            const numA = prizeA ? parseInt(prizeA) : 0
+            const numB = prizeB ? parseInt(prizeB) : 0
+
+            return numA - numB // prize 오름차순 정렬
         })
-    }, [projects, selectedProjectType])
+    }, [projects, selectedConference])
 
     // 초기 선택값 설정
     useEffect(() => {
-        if (projects?.length) {
-            const firstWithType = projects.find((p) => !!p.properties?.conference?.select?.name)
-            if (firstWithType) {
-                setSelectedProjectType(normalizeProjectType(firstWithType.properties.conference.select.name))
-                setSelectedProjectId(firstWithType.id)
-            } else {
-                setSelectedProjectType(null)
-                setSelectedProjectId(projects[0].id)
-            }
+        if (projects?.length && uniqueConferences.length > 0) {
+            const firstConference = uniqueConferences[0]
+            setSelectedConference(firstConference)
+
+            const normalized = normalizeConference(firstConference)
+            const firstProject = projects.find((p) => {
+                const conf = p.properties?.conference?.select?.name
+                return conf ? normalizeConference(conf) === normalized : false
+            })
+            setSelectedProjectId(firstProject?.id ?? null)
         }
-    }, [projects])
+    }, [projects, uniqueConferences])
 
     // 타입 변경 시 해당 타입의 첫 프로젝트로 선택 갱신
     useEffect(() => {
@@ -80,41 +93,34 @@ export default function ProjectsPage() {
 
     return (
         <FadeInOnMount className="flex justify-center items-center">
-            <TitledSection title="프로젝트" className="w-11/12 md:w-3/4 xl:w-3/5 2xl:w-1/2">
+            <TitledSection title="프로젝트" className="w-full max-w-[1280px] px-8">
                 <p className="text-md md:text-xl text-slate-300 text-center max-w-xs md:max-w-sm break-keep">
                     주요 프로젝트들을 소개합니다. 하단의 토글을 눌러 학회원들이 어떤 문제를 해결하고, 어떤 기술을
                     시도했는지 확인해보세요.
                 </p>
 
-                <div className="w-full border-b border-slate-700" />
+                <hr className="w-full border-slate-700" />
 
                 <div className="w-full flex flex-col lg:flex-row space-y-5 lg:space-x-7">
-                    {/* project type selector  */}
-                    <ProjectTypeSelector
-                        type={uniqueProjectTypes}
-                        selectedType={selectedProjectType}
-                        setSelectedType={setSelectedProjectType}
+                    {/* 컨퍼런스 목록 선택 네비게이션 */}
+                    <ConferenceSelector
+                        type={uniqueConferences}
+                        selectedType={selectedConference}
+                        setSelectedType={setSelectedConference}
                         isLoading={isLoading}
                     />
 
                     <div className="w-full space-y-5 lg:space-y-7">
-                        {/* project selector */}
-                        {isLoading ? (
-                            <ProjectSelectorSkeleton />
-                        ) : (
-                            filteredProjects.length > 0 && (
-                                <ProjectSelector
-                                    projects={filteredProjects}
-                                    selectedId={selectedProjectId}
-                                    handleChange={setSelectedProjectId}
-                                />
-                            )
-                        )}
+                        {/* 본선 진출작 목록 선택 네비게이션 */}
+                        <ProjectSelector
+                            projects={filteredProjects}
+                            selectedId={selectedProjectId}
+                            handleChange={setSelectedProjectId}
+                            isLoading={isLoading}
+                        />
 
-                        {/* notion page renderer */}
-                        <div className="p-7 rounded-3xl bg-slate-800 text-slate-200">
-                            <ProjectRenderer projectId={selectedProjectId} />
-                        </div>
+                        {/* 프로젝트 노션 페이지 */}
+                        <ProjectArticle projectId={selectedProjectId} />
                     </div>
                 </div>
             </TitledSection>

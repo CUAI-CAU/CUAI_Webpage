@@ -1,22 +1,24 @@
-interface ProjectTypeSelectorProps {
+import { ConferenceSelectorSkeleton } from './Skeleton'
+
+interface ConferenceSelectorProps {
     type: string[]
     selectedType: string | null
     setSelectedType: (value: string) => void
     isLoading?: boolean
 }
 
-export const ProjectTypeSelector = ({
+export const ConferenceSelector = ({
     type,
     selectedType,
     setSelectedType,
     isLoading = false,
-}: ProjectTypeSelectorProps) => {
+}: ConferenceSelectorProps) => {
     return (
-        <div className="min-w-52 h-full p-6 pb-8 bg-slate-800 rounded-2xl space-y-5">
-            <div className="text-center text-lg">컨퍼런스 목록</div>
+        <nav className="min-w-52 h-full p-6 pb-8 bg-slate-800 rounded-2xl space-y-5">
+            <h2 className="text-center text-lg">컨퍼런스 목록</h2>
             <div className="w-full my-7 border-b border-slate-400" />
             {isLoading ? (
-                <div className="h-10 lg:h-96 w-full rounded-xl bg-slate-500 animate-pulse" />
+                <ConferenceSelectorSkeleton />
             ) : (
                 <ul className="flex flex-row lg:flex-col gap-3 overflow-auto [&::-webkit-scrollbar]:hidden">
                     {type.map((name) => (
@@ -32,6 +34,6 @@ export const ProjectTypeSelector = ({
                     ))}
                 </ul>
             )}
-        </div>
+        </nav>
     )
 }

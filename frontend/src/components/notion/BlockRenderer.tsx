@@ -1,6 +1,7 @@
 import { BlockView, CalloutBlockView, ImageBlockView, ParagraphBlockView, VideoBlockView } from '@/types/notion/blocks'
 import Image from 'next/image'
 import { useState } from 'react'
+import { BaseSkeleton } from '../Skeleton'
 
 export const BlockRenderer = ({ block }: { block: BlockView }) => {
     switch (block.type) {
@@ -50,8 +51,8 @@ const ImageBlock = ({ block }: { block: ImageBlockView }) => {
     return (
         <div className="w-full flex justify-center items-center relative min-h-[288px]">
             {!isLoaded && (
-                <div className="absolute inset-0 flex items-center justify-center animate-pulse">
-                    <div className="w-full max-w-[1000px] h-full bg-slate-500 rounded-xl" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <BaseSkeleton sizeConfig="w-full max-w-[1000px] h-full" />
                 </div>
             )}
 

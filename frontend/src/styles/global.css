@@ -1,0 +1,42 @@
+@import 'tailwindcss';
+
+:root {
+    --background: #081321;
+    --foreground: #fafafa;
+    --pretendard: 'pretendard', sans-serif;
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+}
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: pretendard, Arial, Helvetica, sans-serif;
+    min-width: 360px;
+}
+
+@theme {
+    --animate-wave: wave 2s linear infinite;
+    --animate-fade-in: fadeIn 0.2s ease-out forwards;
+
+    @keyframes wave {
+        0% {
+            background-position: 200% 0;
+        }
+        100% {
+            background-position: -200% 0;
+        }
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+}

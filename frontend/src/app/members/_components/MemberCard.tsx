@@ -5,8 +5,9 @@ import { UserRound } from 'lucide-react'
 export const MemberCard = ({ member }: { member: MembersNotionPage }) => {
     return (
         <div className="bg-slate-800/90 rounded-2xl w-72 h-56 p-5 space-y-5 transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02]">
-            <div className="text-3xl">
-                <UserRound />
+            <div className="flex flex-row justify-between">
+                <UserRound size={30} />
+                <p className="text-slate-300">{member.properties.track.select.name}</p>
             </div>
             <div className="flex flex-row items-end gap-2">
                 <div className="text-xl font-semibold">{member.properties.member_name.title[0].plain_text}</div>

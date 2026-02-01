@@ -3,6 +3,7 @@
 import { FadeInOnScroll } from '@/components'
 import { useGetIntroductions } from '@/hooks/useGetInroductions'
 import { IntroductionNotionPage } from '@/types/notion/properties'
+import { WhoAreWeSkeleton } from './Skeleton'
 
 interface WhoAreWeCardProps {
     label: string
@@ -44,24 +45,20 @@ const WhoAreWe = ({ introductions }: { introductions: IntroductionNotionPage[] }
     )
 }
 
-const WhoAreWeSkeleton = () => {
-    return <div className="w-full h-[382px] bg-slate-500 rounded-2xl animate-pulse" />
-}
-
 export const Introduction = () => {
     const { data: introductions, isLoading } = useGetIntroductions()
 
     return (
         <FadeInOnScroll className="flex items-center justify-center min-h-screen">
             <section className="flex flex-col w-5/6 md:w-3/4 xl:w-2/3 2xl:w-1/2 space-y-10">
-                <div className="text-center md:text-start text-5xl font-semibold">학회 소개</div>
+                <div className="text-center md:text-start text-5xl font-semibold break-keep">학회 소개</div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                     {/* left section */}
                     <div className="flex flex-col justify-between py-3 text-center md:text-start whitespace-pre-line">
                         <div className="text-3xl md:text-4xl break-keep">
-                            &ldquo;CUAI는 중앙대학교{'\n'}
-                            <span className="text-emerald-500"> 유일의 인공지능 학회</span>입니다.&ldquo;
+                            CUAI는 중앙대학교{'\n'}
+                            <span className="text-emerald-500"> 유일의 인공지능 학회</span>입니다.
                         </div>
 
                         <div className="mt-10 text-lg md:text-xl text-slate-400 break-keep">

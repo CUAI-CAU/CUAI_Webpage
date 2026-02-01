@@ -47,9 +47,10 @@ export type MultiSelectProperty = CommonProperty & {
 // DB Properties
 
 export type ProjectProperties = {
+    project_name: TitleProperty
     conference: SelectProperty
     participants: MultiSelectProperty
-    project_name: TitleProperty
+    prize: RichTextProperty
 }
 
 export type AwardProperties = {
@@ -58,10 +59,11 @@ export type AwardProperties = {
 }
 
 export type MemberProperties = {
-    interests: MultiSelectProperty
-    email_address: CommonProperty & { email: string }
-    major: SelectProperty
     member_name: TitleProperty
+    year: MultiSelectProperty
+    major: SelectProperty
+    interests: MultiSelectProperty
+    track: SelectProperty
 }
 
 export type IntroductionProperties = {
@@ -83,6 +85,10 @@ export type GpuProperties = {
 export type FaqProperties = {
     question: TitleProperty
     answer: RichTextProperty
+}
+
+export type NewsProperties = {
+    title: TitleProperty
 }
 
 export type CommonNotionPage<T> = {
@@ -111,3 +117,4 @@ export type IntroductionNotionPage = CommonNotionPage<IntroductionProperties>
 export type CurriculumNotionPage = CommonNotionPage<CurriculumProperties>
 export type GpuNotionPage = CommonNotionPage<GpuProperties>
 export type FaqNotionPage = CommonNotionPage<FaqProperties>
+export type NewsNotionPage = CommonNotionPage<NewsProperties>
