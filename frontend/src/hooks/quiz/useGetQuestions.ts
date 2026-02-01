@@ -9,7 +9,7 @@ export const useGetQuestions = () => {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const { data } = await axiosInstance.get(`quiz/questions`)
+                const { data } = await axiosInstance.get('/quiz/questions')
                 setQuiz(data)
             } catch (error) {
                 console.error(error)

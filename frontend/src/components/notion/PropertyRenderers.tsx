@@ -1,10 +1,10 @@
 import { Tag } from '@/types/notion/common'
 import { ColoredTag } from './ColoredTag'
 
-export const SelectProperties = ({ label, content }: { label: string; content: Tag }) => (
+export const SelectProperties = ({ label, content }: { label: string; content: Tag | null | undefined }) => (
     <div className="grid grid-cols-4 gap-7">
         <p className="text-slate-400 whitespace-nowrap">{label}</p>
-        <ColoredTag text={content.name} color={content.color} />
+        {content ? <ColoredTag text={content.name} color={content.color} /> : <span className="text-slate-500">-</span>}
     </div>
 )
 

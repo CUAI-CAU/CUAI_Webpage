@@ -15,7 +15,9 @@ export const ProjectRenderer = ({ projectId }: ProjectRendererProps) => {
         <>
             {properties ? (
                 <div className="space-y-7">
-                    <h1 className="text-xl md:text-3xl font-bold">{properties.project_name.title[0].plain_text}</h1>
+                    <h1 className="text-xl md:text-3xl font-bold">
+                        {properties.project_name.title[0]?.plain_text ?? '(제목 없음)'}
+                    </h1>
                     <div className="text-sm px-3 space-y-3">
                         <SelectProperties label="컨퍼런스" content={properties.conference.select} />
                         <MultiSelectProperties label="참여자" contents={properties.participants.multi_select} />
