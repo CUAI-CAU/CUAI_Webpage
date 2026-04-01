@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+from urllib.parse import urlparse
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -32,10 +34,17 @@ DOMAIN = os.getenv("DOMAIN")
 WWW_DOMAIN = os.getenv("WWW_DOMAIN")
 LOCAL_HOST = os.getenv("LOCAL_HOST")
 SERVER_IP = os.getenv("SERVER_IP")
-ALLOWED_HOSTS.append(DOMAIN)
-ALLOWED_HOSTS.append(WWW_DOMAIN)
-ALLOWED_HOSTS.append(LOCAL_HOST)
-ALLOWED_HOSTS.append(SERVER_IP)
+FRONTEND_TEMP_DOMAIN = os.getenv("FRONTEND_TEMP_DOMAIN")
+
+for host in (DOMAIN, WWW_DOMAIN, LOCAL_HOST, SERVER_IP, "cuai.kr"):
+    if host and host not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(host)
+
+if FRONTEND_TEMP_DOMAIN:
+    parsed_frontend_domain = urlparse(FRONTEND_TEMP_DOMAIN)
+    frontend_hostname = parsed_frontend_domain.hostname or FRONTEND_TEMP_DOMAIN
+    if frontend_hostname and frontend_hostname not in ALLOWED_HOSTS:
+        ALLOWED_HOSTS.append(frontend_hostname)
 
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
@@ -146,4 +155,5 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000", # 프론트엔드 개발 서버 주소
     "http://127.0.0.1:3000", # 프론트엔드 개발 서버 주소
 ]
-CORS_ALLOWED_ORIGINS.append(os.getenv("FRONTEND_TEMP_DOMAIN"))
+if FRONTEND_TEMP_DOMAIN:
+    CORS_ALLOWED_ORIGINS.append(FRONTEND_TEMP_DOMAIN)

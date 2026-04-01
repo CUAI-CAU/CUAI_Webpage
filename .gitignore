@@ -6,6 +6,10 @@ __pycache__
 db.sqlite3
 media
 
+quiz_log/
+staticfiles/
+static/
+
 # Backup files # 
 *.bak 
 
